@@ -144,7 +144,7 @@ const App = () => {
 
       {/* Chat window */}
       {isOpen && (
-        <div className="bg-white w-full max-w-sm sm:w-80 md:w-96 h-[400px] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-200">
+        <div className="bg-white w-full p-4 max-w-sm sm:w-80 md:w-96 h-[400px] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-200">
           
           {/* Header */}
           <div className="bg-pink-600 text-white flex justify-between items-center px-4 py-3 rounded-t-2xl">
