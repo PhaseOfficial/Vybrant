@@ -11,7 +11,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section>
+    <section className="border-b border-gray-400 py-4 mb-10">
 
 
     <div className="py-24 px-6 text-center z-20 relative">
@@ -32,10 +32,33 @@ export default function HeroSection() {
 
 <Link to="/BespokePackages">
   <button
-    className="rounded-full bg-gray-200 border-black  text-black px-6 py-3 mt-8 font-semibold hover:bg-pink-500 transition duration-300 ease-in-out"
+  className="
+    relative overflow-hidden
+    rounded-full border-2 border-pink-500 text-pink-500 
+    px-6 py-3 mt-8 font-semibold
+    transition-all duration-300 ease-in-out
+    group
+  "
+>
+  <span
+    className="
+      relative z-10 transition-colors duration-300 ease-in-out
+      group-hover:text-white
+    "
   >
-    Contact Us 
-  </button>
+    Work With Us
+  </span>
+  <span
+    className="
+      absolute inset-0 bg-pink-500 
+      translate-x-[-100%] 
+      group-hover:translate-x-0
+      transition-transform duration-300 ease-in-out
+      z-0
+    "
+  ></span>
+</button>
+
 </Link>
 
 
