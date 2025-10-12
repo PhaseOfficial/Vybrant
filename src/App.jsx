@@ -10,6 +10,7 @@ import Games from "./pages/Games";
 import TagManager from 'react-gtm-module';
 import StorePage from "./pages/StorePage";
 import AIChatWidget from "./components/AIChatWidget";
+import CookieConsent from "./components/Cookies";
 
 const tagManagerArgs = {
   gtmId: 'GTM-PKXK7LPV', // Replace with your GTM ID
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/Store" element={<StorePage />} />
       </Routes>
       <AIChatWidget />
+      <CookieConsent />
     </div>
     
       
