@@ -1,8 +1,11 @@
 import React from "react";
+import PartnersSection from "./PartnersSection";
 
 export default function WhyChooseUs() {
   return (
     <section className="py-20 px-6 border-t border-b mt-10 border-gray-400">
+      <PartnersSection />
+      
       <div className="max-w-5xl mx-auto text-center">
         {/* Main Heading */}
         <h2 className="text-4xl md:text-5xl font-bold text-pink-500 mb-12">
