@@ -1,4 +1,4 @@
-import ScrollStack, { ScrollStackItem } from './ScrollStack'
+
 
 const Carreer = () => (
   <section className='bg-black text-white flex items-center justify-center relative w-full min-h-screen p-4 font-montserrat font-black text-4xl sm:text-2xl md:text-4xl'>
@@ -7,7 +7,7 @@ const Carreer = () => (
       <p>Keep scrolling — normal page continues here 👇</p>
     </div>
    
-    <ScrollStack useWindowScroll={true}>
+    <ScrollStack>
       <ScrollStackItem>
       <div class="card">
         

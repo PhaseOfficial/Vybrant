@@ -1,5 +1,9 @@
-import SplitText from "./SplitText";
-import RippleGrid from "./RippleGrid";
+import React from "react";
+import { Link } from 'react-router-dom';
+import Plasma from './Plasma';
+import image1 from "../assets/qt=q_95.webp";
+import { FiPhone } from 'react-icons/fi';
+
 
 export default function HeroSection() {
   const handleAnimationComplete = () => {
@@ -7,64 +11,49 @@ export default function HeroSection() {
   };
 
   return (
-    <section
-      style={{
-        position: "relative",
-        width: "100%",
-        height: "600px",
-        overflow: "hidden",
-      }}
-    >
-      {/* Ripple background */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0, // fill parent
-          zIndex: 2, // behind everything
-        }}
-      >
-        <RippleGrid
-          enableRainbow={true}
-          gridColor="#ffffff"
-          rippleIntensity={0.05}
-          gridSize={10}
-          gridThickness={15}
-          mouseInteraction={true}
-          mouseInteractionRadius={1.2}
-          opacity={0.8}
-        />
-      </div>
+    <section>
 
-      {/* Foreground Hero Content */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-          color: "white",
-        }}
-      >
-        <SplitText
-  text={`Hi, I'm Arthur`}
-  className="text-5xl font-black font-montserrat text-center md:text-8xl whitespace-pre-line"
-  delay={100}
-  duration={0.6}
-  zIndex={6}
-  ease="power3.out"
-  splitType="chars"
-  from={{ opacity: 0, y: 40 }}
-  to={{ opacity: 1, y: 0 }}
-  threshold={0.1}
-  rootMargin="-100px"
-  textAlign="center"
-  onLetterAnimationComplete={handleAnimationComplete}
-/>
 
-      </div>
+    <div className="py-24 px-6 text-center z-20 relative">
+<img
+      src={image1}
+      alt="Company Logo"
+      className="h-40 w-auto center mx-auto mb-6"
+    />
+      <h1 className="text-4xl md:text-5xl font-montserrat font-black mb-6">
+    We Are Making a Real Difference
+  </h1>
+  <p className="text-lg text-black md:text-xl max-w-3xl mx-auto leading-relaxed">
+    Vybrant Care Services enriches and enhances the lives of those needing care by
+    delivering exceptional, personalised support that enables independence, dignity
+    and wellbeing within the comfort of their own homes.
+  </p>
+   <div>
+
+<Link to="/BespokePackages">
+  <button
+    className="rounded-full bg-gray-200 border-black  text-black px-6 py-3 mt-8 font-semibold hover:bg-pink-500 transition duration-300 ease-in-out"
+  >
+    Contact Us 
+  </button>
+</Link>
+
+
+</div>
+  </div>
+   <div className="absolute inset-0 z-0 blur-lg">
+   <Plasma
+    animationType="rotate"
+    timeScale={0.5}
+    height={3.5}
+    baseWidth={5.5}
+    scale={3.6}
+    hueShift={0}
+    colorFrequency={1}
+    noise={0.5}
+    glow={1}
+  />
+</div>
     </section>
   );
 }

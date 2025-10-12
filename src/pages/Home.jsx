@@ -7,7 +7,7 @@ import Footer from '../components/footer';
 import Companies from '../components/companies';
 import Offer from '../components/Offer';
 import Trust from '../components/Trust';
-import Carreer from '../components/Carreer';
+// import Carreer from '../components/Carreer';
 //import Testimonials from '../components/Testimonials';
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
             <Explore className=""/>
             <Companies className=""/>
             <Trust className=""/>
-            <Carreer className=""/>
+            {/* <Carreer className=""/> */}
             <Contactus className="mt-20" id="contact"/>
             <Footer className="mt-20"/>
 

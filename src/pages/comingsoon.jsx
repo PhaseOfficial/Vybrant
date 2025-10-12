@@ -21,12 +21,7 @@ const ComingSoon = () => {
           className="w-64 h-64 mx-auto mb-8"
         />
         <div className="flex justify-center space-x-4">
-        <Link
-        to="/games"
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
-      >
-        Play Games
-      </Link>
+
           <a
             href="/"
             className="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"

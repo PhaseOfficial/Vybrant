@@ -91,10 +91,6 @@ canvas {
 .gradual-blur-inner {
   pointer-events: none;
 }
-html, body {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-}
 
 .card {
  width: 1000px;
