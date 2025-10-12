@@ -19,17 +19,17 @@ const Footer = () => {
 
           {/* Social Media Icons */}
           <div className="flex space-x-4 mb-4 md:mb-0">
-            <a href="https://wa.me/message/LL4IB5RMLFQVP1" className="hover:text-white">
+            <a href="https://wa.me/message/LL4IB5RMLFQVP" className="hover:text-white">
             <IoLogoWhatsapp className="w-6 h-6"/>
 
             </a>
-            <a href="https://www.instagram.com/phase_rcs/profilecard/?igsh=MXFmYW8zMjZ5dDU5dw==" className="hover:text-white">
+            <a href="https://www.instagram.com/vybrantcareservices/#" className="hover:text-white">
             <AiFillInstagram className="w-6 h-6"/>
             </a>
-            <a href="https://www.facebook.com/share/14fdJfhYDH/?mibextid=LQQJ4d" className="hover:text-white">
+            <a href="https://www.facebook.com/vybrantcareservices" className="hover:text-white">
             <FaFacebook className="w-6 h-6"/>
             </a>
-            <a href="https://www.linkedin.com/company/red-cup-series/" className="hover:text-white">
+            <a href="https://www.linkedin.com/in/vybrantcareservices" className="hover:text-white">
             <FaLinkedin className="w-6 h-6"/>
             </a>
           </div>
