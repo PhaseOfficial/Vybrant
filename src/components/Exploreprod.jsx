@@ -6,7 +6,7 @@ const Exploreprod = () => {
   return (
     <section className="relative rounded-[3rem] bg-gray-100 overflow-hidden flex flex-col items-center justify-center min-h-screen overflow-hidden bg-black py-20">
       
-     
+      
       {/* Foreground content */}
       <div className="relative z-10 text-center w-full px-6">
         <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-12">

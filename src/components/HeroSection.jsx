@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import Plasma from './Plasma';
 import image1 from "../assets/qt=q_95.webp";
-import { FiPhone } from 'react-icons/fi';
+import Countuop from './countup';
 
 
 export default function HeroSection() {
@@ -63,7 +63,9 @@ export default function HeroSection() {
 
 
 </div>
+  <Countuop/>
   </div>
+
    <div className="absolute inset-0 z-0 blur-lg">
    <Plasma
     animationType="rotate"
