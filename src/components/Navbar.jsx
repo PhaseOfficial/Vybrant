@@ -66,22 +66,22 @@ export default function Navbar() {
 <Link to="/" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Home
 </Link>
-<Link to="/about" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   About Us
 </Link>
-<Link to="/services" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Services
 </Link>
-<Link to="/supported-living" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Supported Living
 </Link>
-<Link to="/careers" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Careers
 </Link>
-<Link to="/contact" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Contact Us
 </Link>
-<Link to="/blog" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Blog
 </Link>
 

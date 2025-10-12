@@ -4,7 +4,7 @@ import PartnersSection from "./PartnersSection";
 export default function WhyChooseUs() {
   return (
     <section className="py-20 px-6 border-t border-b mt-10 border-gray-400">
-      <PartnersSection />
+      
       
       <div className="max-w-5xl mx-auto text-center">
         {/* Main Heading */}
@@ -57,6 +57,7 @@ export default function WhyChooseUs() {
           </p>
         </div>
       </div>
+      <PartnersSection />
     </section>
   );
 }

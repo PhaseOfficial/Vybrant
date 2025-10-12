@@ -8,7 +8,7 @@ import dementiaAllianceLogo from "../assets/dementia-alliance.webp";
 
 const PartnersSection = () => {
   return (
-    <section className="bg-white rounded-[3rem] mb-20 py-12">
+    <section className="bg-white rounded-[3rem] mb-10 mt-20 py-12">
       <div className="max-w-6xl mx-auto text-center px-4">
         {/* Heading */}
         <h2 className="text-2xl md:text-3xl font-semibold text-pink-600 mb-10">
