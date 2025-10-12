@@ -18,8 +18,8 @@ export default function Home() {
             <HeroSection className=""/>
             <Offer className=""/>
             <Explore className=""/>
-            <Companies className=""/>
             <Trust className=""/>
+            <Companies className=""/>
             {/* <Carreer className=""/> */}
             <Contactus className="mt-20" id="contact"/>
             <Footer className="mt-20"/>
