@@ -1,10 +1,11 @@
 import BlurText from "./BlurText";
 import RotatingText from './RotatingText';
 import Particles from './Particles';
+import VisionImage from "../assets/vision.png";
 
 const Exploreprod = () => {
   return (
-    <section className="relative flex items-center justify-center min-h-screen overflow-hidden bg-black">
+    <section className="relative rounded-[3rem] bg-gray-100 flex items-center justify-center min-h-screen overflow-hidden bg-black">
       {/* Particles background */}
       <div className="absolute inset-0">
         <Particles
@@ -21,22 +22,32 @@ const Exploreprod = () => {
 
       {/* Foreground content */}
       <div className="relative z-1 text-center">
-        <BlurText
-          text="I excel at being a"
-          className="text-4xl sm:text-6xl md:text-8xl font-bold text-white mb-6"
+        <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-6">
+        About Vybrant Care Services
+        </h2>
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-lg overflow-hidden flex flex-col md:flex-row items-center">
+
+      {/* Image */}
+      <div className="w-full md:w-1/2 h-64 md:h-auto">
+        <img
+          src={VisionImage}
+          alt="Our Vision"
+          className="w-full h-full object-cover"
         />
-        <RotatingText
-          texts={['Data Scientist', 'Graphic Designer', 'Developer', 'Digital Marketer!']}
-          mainClassName="px-4 sm:px-6 md:px-8 bg-gradient-to-r from-purple-700 via-pink-500 to-red-500 text-white text-4xl sm:text-6xl md:text-8xl overflow-hidden py-1 sm:py-2 md:py-3 justify-center rounded-lg inline-block font-black font-montserrat-bold"
-          staggerFrom="last"
-          initial={{ y: '100%' }}
-          animate={{ y: 0 }}
-          exit={{ y: '-120%' }}
-          staggerDuration={0.025}
-          splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-          transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-          rotationInterval={2000}
-        />
+      </div>
+
+      {/* Text Content */}
+      <div className="p-8 md:w-1/2">
+        <h2 className="text-3xl font-bold text-pink-500 mb-4">Our Vision</h2>
+        <p className="text-gray-700 leading-relaxed">
+          To become the UK’s leading home care provider, expanding our trusted and
+          respected services from Yorkshire to every major city in the nation, while
+          setting new standards for personalised home care and becoming the first
+          choice for both service users and care professionals.
+        </p>
+      </div>
+
+    </div>
       </div>
     </section>
   );

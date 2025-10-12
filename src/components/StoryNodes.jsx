@@ -26,7 +26,7 @@ const storyData = [
 
 export default function StoryNodes() {
   return (
-    <section className="relative w-full rounded-[3rem] bg-gray-50 min-h-screen py-20 px-6 flex flex-col items-center">
+    <section className="relative w-full rounded-[3rem] bg-gray-100 min-h-screen py-20 px-6 flex flex-col items-center">
       {/* Vertical timeline line */}
       <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-pink-400 rounded-full"></div>
 
