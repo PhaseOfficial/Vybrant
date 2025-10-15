@@ -6,11 +6,13 @@ import Services from "./pages/Services";
 import ComingSoon from "./pages/comingsoon";
 import './App.css';
 import ContactUs from "./pages/Contact";
-import Games from "./pages/Games";
+import Careers from "./pages/Careers";
 import TagManager from 'react-gtm-module';
-import StorePage from "./pages/StorePage";
+import Supportedliving from "./pages/Supportedliving";
 import AIChatWidget from "./components/AIChatWidget";
 import CookieConsent from "./components/Cookies";
+import OurFacilities from "./pages/our-facilities";
+import Mordenslavery from "./pages/Mordenslavery";
 
 const tagManagerArgs = {
   gtmId: 'GTM-PKXK7LPV', // Replace with your GTM ID
@@ -29,8 +31,11 @@ const App = () => {
         <Route path="/Services" element={<Services />} />
         <Route path="/Comingsoon" element={<ComingSoon />} />
         <Route path="/Contact" element={<ContactUs />} />
-        <Route path="/Games" element={<Games />} />
-        <Route path="/Store" element={<StorePage />} />
+        <Route path="/Careers" element={<Careers />} />
+        <Route path="/Supportedliving" element={<Supportedliving />} />
+        <Route path="/Our-Facilities" element={<OurFacilities />} />
+        <Route path="/Mordenslavery" element={<Mordenslavery />} />
+        <Route path="*" element={<div className="text-center mt-20 text-2xl">404 - Page Not Found</div>} />
       </Routes>
       <AIChatWidget />
       <CookieConsent />

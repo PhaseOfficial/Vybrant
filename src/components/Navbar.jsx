@@ -32,11 +32,11 @@ export default function Navbar() {
           {/* Desktop Links */}
         <div className="hidden md:flex space-x-6 text-black font-montserrat">
   <Link to="/" className="hover:text-gray-600">Home</Link>
-  <Link to="/comingsoon" className="hover:text-gray-600">About Us</Link>
-  <Link to="/comingsoon" className="hover:text-gray-600">Services</Link>
-  <Link to="/comingsoon" className="hover:text-gray-600">Supported Living</Link>
-  <Link to="/comingsoon" className="hover:text-gray-600">Careers</Link>
-  <Link to="/comingsoon" className="hover:text-gray-600">Contact Us</Link>
+  <Link to="/About" className="hover:text-gray-600">About Us</Link>
+  <Link to="/Services" className="hover:text-gray-600">Services</Link>
+  <Link to="/Supportedliving" className="hover:text-gray-600">Supported Living</Link>
+  <Link to="/Careers" className="hover:text-gray-600">Careers</Link>
+  <Link to="/Contact" className="hover:text-gray-600">Contact Us</Link>
   <Link to="/comingsoon" className="hover:text-gray-600">Blog</Link>
 </div>
 
@@ -66,19 +66,19 @@ export default function Navbar() {
 <Link to="/" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Home
 </Link>
-<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/About" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   About Us
 </Link>
-<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/Services" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Services
 </Link>
-<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/Supportedliving" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Supported Living
 </Link>
-<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/Careers" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Careers
 </Link>
-<Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
+<Link to="/Contact" onClick={() => setIsOpen(false)} className="hover:text-gray-600">
   Contact Us
 </Link>
 <Link to="/comingsoon" onClick={() => setIsOpen(false)} className="hover:text-gray-600">

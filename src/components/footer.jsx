@@ -19,7 +19,7 @@ const Footer = () => {
 
           {/* Social Media Icons */}
           <div className="flex space-x-4 mb-4 md:mb-0">
-            <a href="https://wa.me/message/LL4IB5RMLFQVP" className="hover:text-white">
+            <a href="https://wa.me/4407828402043" className="hover:text-white">
             <IoLogoWhatsapp className="w-6 h-6"/>
 
             </a>

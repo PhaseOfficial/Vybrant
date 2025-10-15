@@ -23,7 +23,13 @@ const PaperPlaneIcon = ({ size = 14, className = "" }) => (
 // 🧠 Context prompts: defines assistant role, tone, and company info
 const contextPrompts = `
 You are Vybrant AI — a warm, professional assistant representing Vybrant Care Services UK.
-You help users with inquiries about home care, job opportunities, and contact details.
+You help users with inquiries about home care with free Home Assessment,After Hospital Care, job opportunities,
+Our supported, Specialist Care,Respite Care, Companionship Service, Live-in Care, Emergency Care, housing that provides
+safe and supportive environments for young adults aged 18 to 25 and older adults
+transitioning to independent living, Independent Living Spaces, Our Stop Over Bed hosts 
+are available for young and older adults for a maximum of 
+three nights giving the referring agency the opportunity to find suitable long-term 
+accommodation and contact details.
 Speak politely, empathetically, and clearly.
 If a question is not related to care, gently redirect to relevant topics.
 
@@ -121,6 +127,26 @@ const App = () => {
     }
   };
 
+// 🪄 Simple text formatter: supports **bold**, _italic_, __underline__, `code`, and line breaks
+const formatMessage = (text) => {
+  if (!text) return "";
+
+  let formatted = text
+    // Replace bold **text**
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    // Replace italic _text_
+    .replace(/_(.*?)_/g, "<em>$1</em>")
+    // Replace underline __text__
+    .replace(/__(.*?)__/g, "<u>$1</u>")
+    // Replace inline code `code`
+    .replace(/`([^`]+)`/g, "<code class='bg-gray-200 px-1 rounded text-sm'>$1</code>")
+    // Replace newlines with <br>
+    .replace(/\n/g, "<br>");
+
+  return formatted;
+};
+
+
   return (
     <div className="fixed bottom-6 right-6 z-50 font-sans">
       <style>{`
@@ -164,23 +190,22 @@ const App = () => {
           {/* Messages Container */}
           <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50">
             {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`flex ${
-                  msg.sender === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
-                <div
-                  className={`px-4 py-2 rounded-xl max-w-[80%] text-sm shadow-md transition-all duration-300 ${
-                    msg.sender === "user"
-                      ? "bg-pink-600 text-white rounded-br-sm"
-                      : "bg-white text-gray-800 border border-gray-100 rounded-tl-sm"
-                  }`}
-                >
-                  {msg.text}
-                </div>
-              </div>
-            ))}
+  <div
+    key={idx}
+    className={`flex ${
+      msg.sender === "user" ? "justify-end" : "justify-start"
+    }`}
+  >
+    <div
+      className={`px-4 py-2 rounded-xl max-w-[80%] text-sm shadow-md transition-all duration-300 ${
+        msg.sender === "user"
+          ? "bg-pink-600 text-white rounded-br-sm"
+          : "bg-white text-gray-800 border border-gray-100 rounded-tl-sm"
+      }`}
+      dangerouslySetInnerHTML={{ __html: formatMessage(msg.text) }}
+    />
+  </div>
+))}
 
             {/* Typing Indicator */}
             {loading && (

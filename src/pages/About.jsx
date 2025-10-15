@@ -8,7 +8,10 @@ import Cvutete from '../assets/cvutete.png';
 import Cchadiwa from '../assets/cchadiwa.png';
 import gowani from '../assets/gowani.jpg'
 import { FaLinkedin } from "react-icons/fa";
-import backgroundImage from '../assets/background.png'; 
+import backgroundImage from '../assets/mission.png'; 
+import { Link } from 'react-router-dom';
+import jeanImage from '../assets/jean.webp';
+import image1 from "../assets/qt=q_95.webp"; // Replace with the actual path to Jean's image
 
 
 const About = () => {
@@ -16,15 +19,34 @@ const About = () => {
 <div> <div>
     <Navbar />
     <div>
-    <div className="bg-cover bg-center h-screen text-gray-800" >
+    <div className="bg-cover bg-center h-screen" >
       {/* Hero Section */}
-      <section className="flex items-center text-gray-800 bg-cover relative flex-col md:pt-20 md:p-12 md:pb-20 sd:p-8"
-  style={{ backgroundImage: `url(${backgroundImage})` }}>
-        <div className="container mx-auto text-center">
-          <h1 className="text-4xl text-5xl font-bold">About Us</h1>
-          <p className="mt-4 text-lg md:text-xl">
-            We believe 
-          </p><p className="text-4xl md:text-xl mb-4 font-black ">Mindset is Everything</p>
+      <section
+  className="relative flex items-center p-8 rounded-[3rem] mt-20 flex-col md:pt-20 md:p-12 md:pb-20 sd:p-8 overflow-hidden"
+>
+  {/* Blurred background layer */}
+  <div
+    className="absolute inset-0 bg-cover bg-center filter  scale-100"
+    style={{
+      backgroundImage: `url(${backgroundImage})`,
+    }}
+  ></div>
+
+  {/* Optional dark overlay for contrast */}
+  <div className="absolute inset-0 bg-black/30 text-blue-900"></div>
+
+        <div className="container mx-auto text-center mt-20 relative z-10 text-white">
+        <img
+      src={image1}
+      alt="Company Logo"
+      className="h-40 w-auto center mx-auto mb-6"
+    />
+          <h1 className="text-4xl font-bold mb-10">About Us</h1>
+          <p className="text-2xl mb-4 ">Vybrant Care Services is a 
+          trusted home care provider supporting individuals across South Yorkshire and the 
+          East Riding of Yorkshire. We’re passionate about delivering high-quality, personalised
+           care that enables people to maintain their independence and
+           continue living comfortably in their own homes for as long as possible.</p>
         </div>
         
       </section>
@@ -37,32 +59,157 @@ const About = () => {
       transition={{ duration: 1 }}
       className="text-black p-6 rounded-lg shadow-lg my-8"
     >
-      <div className="container mx-auto px-6 md:px-12">
-          <h2 className="text-3xl font-bold text-center mb-8">Our Story</h2>
-          <p className="text-lg leading-relaxed text-center md:text-left">
-          At <span className="text-red-500">Red Cup Series</span>, a name derived from party solo cups to associate the brand with <span className="text-red-500">free and happy vibes</span> we believe technology is more than a tool—it's a <span className="text-red-500">lifestyle</span>. Founded with a vision to improve livelihoods, we combine <span className="text-red-500">cutting-edge innovation </span>with everyday essentials, creating a unique blend of <span className="text-red-500">technology and lifestyle products</span> that enrich lives and empower communities.
+      <div className="container mx-auto px-6 md:px-12 border border-pink-500 rounded-[3rem] py-12">
+          <div className="max-w-4xl mx-auto p-8 text-pink-500">
+          <h2 className="text-4xl font-bold text-center mb-8">What We Offer</h2>
+          <p className="text-center text-2xl">
+          We offer a range of tailored home-care services designed to meet each client’s unique needs, 
+          ensuring a high standard of support and care. Our team is committed to delivering compassionate, 
+          professional assistance that promotes well-being and independence. </p>
+          <div className="mt-8 text-center">
+          <Link to="/Services">
+            <button
+            className="
+              relative overflow-hidden
+              rounded-full border-2 border-pink-600 text-pink-500 
+              px-6 py-3 mt-8 font-semibold
+              transition-all duration-300 ease-in-out
+              group
+            "
+          >
+            <span
+              className="
+                relative z-10 transition-colors duration-300 ease-in-out
+                group-hover:text-white
+              "
+            >
+              Find Out More
+            </span>
+            <span
+              className="
+                absolute inset-0 bg-blue-500 
+                translate-x-[-100%] 
+                group-hover:translate-x-0
+                transition-transform duration-300 ease-in-out
+                z-0
+              "
+            ></span>
+          </button>
+          
+          </Link>
+          </div>
+</div>
+<div className="max-w-4xl mx-auto p-8 text-blue-400">
+          <h2 className="text-4xl font-bold text-center mb-8">Our Staff, Our Strength</h2>
+          <p className="text-center text-2xl">
+          Our team is our greatest asset. We are committed to recruiting, training, 
+          and supporting compassionate professionals who uphold the highest standards of care, 
+          always putting dignity, respect, 
+          and individual needs at the heart of everything they do.</p>
+          </div>
 
-From stylish, <span className="text-red-500">high-quality clothing</span> like T-shirts to advanced <span className="text-red-500">technological devices</span>, we source and deliver only the best the market has to offer. But we don't stop there—we're passionate about <span className="text-red-500">collaboration</span>. By partnering with brands, we help them bring their ideas to life through <span className="text-red-500">creative design, development, and tailored solutions</span>.
+<div className="max-w-6xl mx-auto mt-16 px-4 md:px-8">
+  <h2 className="text-3xl font-bold text-center mb-8">
+    About Our Registered Manager
+  </h2>
 
-Our expertise spans multiple disciplines, including app development, AI and data science solutions, website creation, and graphic design. Over the years, we've launched software applications that address daily challenges, making life simpler and more efficient for our customers.
+  <div className="flex flex-col md:flex-row items-center md:items-start gap-10">
+    {/* Text Section */}
+    <div className="flex-1 text-lg leading-relaxed text-center md:text-left">
+      <p>
+        Jean Sigauke is a committed General Nurse with a heartfelt passion for
+        making a positive difference in people’s lives. With over two decades of
+        experience at Sheffield Teaching Hospitals NHS Trust and Sheffield
+        Health and Social Care, she brings extensive knowledge in general
+        medicine, palliative care, and community-based support for individuals
+        with mental health needs and learning disabilities.
+      </p>
+      <p className="mt-4">
+        In her previous role as a Registered General Nurse, Jean was known for
+        delivering compassionate, high-quality care, a standard she continues to
+        uphold at Vybrant Care Services. Her leadership cultivates a nurturing,
+        person-centred environment where her team feels empowered to support
+        each individual’s independence, dignity, and overall well-being.
+      </p>
+    </div>
 
-<span className="text-red-500">Innovation, quality, and collaboration are at the heart of everything we do</span>. Whether it's designing a new app, crafting a graphic masterpiece, or curating products that enhance your lifestyle, we are dedicated to creating solutions that make a difference.
-
-Join us on this journey as we continue to shape a world where technology and lifestyle meet seamlessly. Together, let's build a brighter future. <span className="text-yellow-500">Mindset is Everything.</span>
-          </p>
-          <h2 className="text-3xl font-bold text-center mb-8 mt-8">Our Mission</h2>
-          <p className="text-lg leading-relaxed text-center md:text-left">
-          To enhance livelihoods by delivering innovative, high-quality technology and lifestyle solutions that empower individuals and businesses to thrive in a rapidly evolving world
-          </p>
-          <h2 className="text-3xl font-bold text-center mb-8 mt-8">Our Vision</h2>
-          <p className="text-lg leading-relaxed text-center md:text-left">
-          To become a global leader in seamlessly integrating technology and lifestyle, fostering creativity, collaboration, and sustainable growth for communities and brands alike.</p>
-        </div>
+    {/* Image Section */}
+    <div className="flex-shrink-0 md:w-1/3 w-full flex justify-center">
+      <img
+        src={jeanImage} // replace with your actual image import or path
+        alt="Jean Sigauke - Registered Manager"
+        className="rounded-2xl shadow-lg w-64 h-64 object-cover md:w-80 md:h-80"
+      />
+    </div>
+  </div>
+</div>
+</div>
     </motion.div>
       </section>
+ 
+    <section className="max-w-6xl mx-auto mt-20 mb-20 px-6 md:px-8 text-gray-800">
+      {/* Header */}
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-bold mb-4 text-gray-900">
+          About Our Staff
+        </h2>
+        <p className="text-xl font-semibold text-blue-700">
+          Committed to Making a Difference
+        </p>
+        <p className="mt-3 text-lg text-gray-600">
+          Enjoy life with support from compassionate caregivers in Sheffield
+        </p>
+      </div>
 
+      {/* Section 1: Compassionate Care */}
+      <div className="bg-gray-50 rounded-3xl p-8 shadow-sm mb-10">
+        <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+          Compassionate and Dedicated Team
+        </h3>
+        <p className="text-gray-700 leading-relaxed">
+          At <span className="font-semibold text-blue-700">Vybrant Care Services</span>,
+          our dedicated team is committed to serving with compassion, respect,
+          and professionalism. We go beyond providing care  we build trusting
+          relationships and treat every individual with the dignity they
+          deserve.
+        </p>
+        <p className="mt-4 text-gray-700 leading-relaxed">
+          Our carers are carefully selected and trained to deliver the highest
+          standards of support, always putting your needs first and working with
+          genuine heart and purpose.
+        </p>
+      </div>
+
+      {/* Section 2: Quality & Compliance */}
+      <div className="bg-gray-50 rounded-3xl p-8 shadow-sm">
+        <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+          Committed to Quality and Compliance
+        </h3>
+        <p className="text-gray-700 leading-relaxed">
+          Professional caregiving across{" "}
+          <span className="font-semibold text-blue-700">
+            South Yorkshire
+          </span>{" "}
+          and{" "}
+          <span className="font-semibold text-blue-700">
+            East Riding of Yorkshire
+          </span>
+          .
+        </p>
+        <p className="mt-4 text-gray-700 leading-relaxed">
+          At <span className="font-semibold text-blue-700">Vybrant Care Services</span>,
+          we ensure all our staff meet the standards set by the{" "}
+          <span className="font-semibold">Care Quality Commission (CQC)</span>.
+          From thorough recruitment and ongoing training to regular supervision
+          and performance reviews, we are dedicated to maintaining high-quality
+          care and upholding the values of safety, compassion, and
+          professionalism in everything we do.
+        </p>
+      </div>
+
+    </section>
       {/* Team Section */}
-<section className="py-12 bg-gray-100">
+<section className="py-12 rounded-[3rem] bg-gray-100">
   <div className="container mx-auto px-6 md:px-12">
     <h2 className="text-3xl font-bold text-center mb-8">Meet the Team</h2>
     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
