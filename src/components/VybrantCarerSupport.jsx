@@ -163,7 +163,7 @@ const VybrantCarerSupport = () => {
           Flexible & Personalised Respite Care
         </h3>
         <p className="text-gray-700 text-center mb-10 max-w-3xl mx-auto">
-          Every carer’s situation is unique. We tailor our respite options to suit both the carer and the individual receiving care — at home, in the community, or on a short break.
+          Every carer’s situation is unique. We tailor our respite options to suit both the carer and the individual receiving care at home, in the community, or on a short break.
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

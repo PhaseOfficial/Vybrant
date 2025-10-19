@@ -22,6 +22,7 @@ import Contactus from "../components/Contactus";
 import OnlineAssessmentBooking from "../components/OnlineAssessmentBooking";
 import HomeFirstReablement from "../components/HomeFirstReablement";
 import VybrantCarerSupport from "../components/VybrantCarerSupport";
+import RecommendedServicesBroxburn from "../components/RecommendedServicesBroxburn";
 
 const services = [
   {
@@ -309,6 +310,7 @@ crisis situations that are supervised 24/7.
 </div>
 
 <HomeFirstReablement />
+<RecommendedServicesBroxburn />
 <VybrantCarerSupport />
 
 <div className="border-b border-gray-800 "></div>
