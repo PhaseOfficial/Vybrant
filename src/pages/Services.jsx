@@ -1,4 +1,9 @@
 import React from "react";
+import { FaHeart, FaUsers, FaComments, FaShieldAlt } from "react-icons/fa";
+// Replace this with your image import
+import MentalHealthImg from "../assets/mental-health.png"; 
+import image6 from "../assets/services.png";
+
 import {
   FaHome,
   FaHospitalUser,
@@ -15,6 +20,8 @@ import emergencyImage from "../assets/emergency.png";
 import { Link } from "react-router-dom";
 import Contactus from "../components/Contactus";
 import OnlineAssessmentBooking from "../components/OnlineAssessmentBooking";
+import HomeFirstReablement from "../components/HomeFirstReablement";
+import VybrantCarerSupport from "../components/VybrantCarerSupport";
 
 const services = [
   {
@@ -127,10 +134,188 @@ const Services = () => {
           designed for your comfort.
         </p>
       </div>
+      <div className="mb-10 relative">
+                <img
+                  src={image6}
+                  alt="Young adults and caregivers in supported living environment"
+                  className="rounded-2xl shadow-2xl object-cover w-full h-[500px] hover:scale-[1.02] transition-all duration-300"
+                />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
+<div className="max-w-3xl mx-auto text-center border-t border-gray-600 mb-16">
+<h2 className="text-4xl md:text-5xl font-bold mt-6 text-blue-700 mb-3">
+      Mental Health Support Services
+      </h2>
+      <p className="text-lg font-medium text-pink-600 mb-6">
+        Serving Sheffield & East Riding
+      </p>
+
+      <div className="border-t-2 border-gray-300 w-20 mb-6"></div>
+
+      <p className="text-gray-700 italic mb-8 text-lg">
+        Because everyone is different and every journey is unique.
+      </p>
+      <p className="text-gray-700 mb-12 leading-relaxed">
+        At Vybrant Care Services, we understand that no two people experience mental health
+        the same way. That’s why our support is person-centred, tailored to your individual
+        needs, and designed to help you live a happy, fulfilling, and independent life.
+      </p>
+
+</div>
+
+<section className="bg-green-100 rounded-[3rem] mb-20 text-gray-800 py-20 px-6 md:px-12">
+  <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
+
+    {/* Left: Image */}
+    <motion.div
+      initial={{ opacity: 0, x: -50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="rounded-3xl shadow-lg overflow-hidden order-2 lg:order-1"
+    >
+      <img
+        src={MentalHealthImg}
+        alt="Mental Health Support"
+        className="w-full h-[600px] object-cover"
+      />
+
+     
+    </motion.div>
+
+    {/* Right: Text & Cards */}
+    <motion.div
+      initial={{ opacity: 0, x: 50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="order-1 lg:order-2"
+    >
+      
+
+      {/* Mental Health Service Cards */}
+      <div className="grid sm:grid-cols-2 gap-6">
+        {[
+          {
+            icon: <FaHandsHelping className="text-blue-600 w-8 h-8" />,
+            title: "Personalised Support",
+            desc: "We assess your needs and tailor our services to suit you, ensuring your care feels right for you.",
+          },
+          {
+            icon: <FaComments className="text-blue-600 w-8 h-8" />,
+            title: "Counselling & Peer Support",
+            desc: "Access counselling and peer support in a safe, welcoming environment no referral needed.",
+          },
+          {
+            icon: <FaHome className="text-blue-600 w-8 h-8" />,
+            title: "Independent Living Support",
+            desc: "Build skills, confidence, and independence to enjoy a better quality of life.",
+          },
+          {
+            icon: <FaUsers className="text-blue-600 w-8 h-8" />,
+            title: "Collaborative Care Planning",
+            desc: "We work with Community Mental Health Teams to help you set and achieve personal goals.",
+          },
+          {
+            icon: <FaHeart className="text-blue-600 w-8 h-8" />,
+            title: "Crisis Support & Accommodation",
+            desc: "Calm, practical support during crises with a personalised Safety Plan for your wellbeing.",
+          },
+          {
+            icon: <FaShieldAlt className="text-blue-600 w-8 h-8" />,
+            title: "Safeguarding & Wellbeing",
+            desc: "We protect your dignity and human rights, ensuring empowerment through compassionate care.",
+          },
+        ].map((item, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300"
+          >
+            <div className="flex items-center gap-4 mb-3">
+              {item.icon}
+              <h4 className="text-lg font-semibold text-gray-900">
+                {item.title}
+              </h4>
+            </div>
+            <p className="text-gray-700 text-sm leading-relaxed">{item.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Mission */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="mt-12 bg-blue-50 p-6 rounded-3xl border border-blue-100 shadow-sm"
+      >
+        <h3 className="text-2xl font-semibold text-blue-700 mb-3 flex items-center gap-2">
+        Our Mission
+        </h3>
+        <p className="text-gray-700 leading-relaxed">
+          Our Mental Health Support Service aims to improve the mental, social, and physical
+          wellbeing of people in our communities. We believe in care that empowers, restores
+          hope, and builds resilience one person at a time.
+        </p>
+      </motion.div>
+    </motion.div>
+  </div>
+</section>
+
+<div className="text-center mb-20">
+
+<p className=" max-w-3xl mx-auto text-center mb-16"> We have accommodation that we can use for emergency admissions or in 
+crisis situations that are supervised 24/7.
+ This is focusing on young adults and adults 18+.</p>
+
+<Link to="/Supportedliving" target="_blank"
+            rel="noopener noreferrer">
+                                      <button
+                                      className="
+                                        relative overflow-hidden
+                                        rounded-full border-2 border-pink-600 text-white-500 
+                                        px-6 py-3 mt-8 font-semibold
+                                        transition-all duration-300 ease-in-out
+                                        group
+                                      "
+                                    >
+                                      <span
+                                        className="
+                                          relative z-10 transition-colors duration-300 ease-in-out
+                                          group-hover:text-white
+                                        "
+                                      >
+                                        <span className="text-2xl font-semibold  flex items-center gap-2">
+              <FaHome className="" /> Supported Living
+            </span>
+                                      </span>
+                                      <span
+                                        className="
+                                          absolute inset-0 bg-pink-500 
+                                          translate-x-[-100%] 
+                                          group-hover:translate-x-0
+                                          transition-transform duration-300 ease-in-out
+                                          z-0
+                                        "
+                                      ></span>
+                                    </button>
+                                    
+                                    </Link>
+</div>
+
+<HomeFirstReablement />
+<VybrantCarerSupport />
+
+<div className="border-b border-gray-800 "></div>
 
       {/* Services Grid */}
-      <h2 className="text-3xl font-semibold text-center mb-10 text-blue-700">
-        Our Services
+      <h2 className="text-3xl  mt-10 font-semibold text-center mb-10 text-blue-700">
+        Our Other Services
       </h2>
 
       <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
@@ -172,6 +357,8 @@ const Services = () => {
       <div className="flex flex-col md:flex-row items-center gap-12">
         {/* Left: Image */}
         <div className="flex-1">
+
+        
           <img
             src={emergencyImage}
             alt="Emergency Care"

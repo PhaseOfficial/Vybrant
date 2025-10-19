@@ -3,12 +3,13 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
 import { motion } from 'framer-motion';
 import Contactus from '../components/Contactus';
-import PAmhonde from '../assets/pamhonde.png';
-import Cvutete from '../assets/cvutete.png';
-import Cchadiwa from '../assets/cchadiwa.png';
-import gowani from '../assets/gowani.jpg'
+import Kabirat from '../assets/Kabirat.png';
+import Kudzi from '../assets/Kudzi.png';
+import Rasna from '../assets/Rasna.png';
+import Shamli from '../assets/Shamli.png'
+import Tincy from '../assets/Tincy.jpeg';
+import Tsitsi from '../assets/Tsitsi.png';
 import { FaLinkedin } from "react-icons/fa";
-import backgroundImage from '../assets/mission.png'; 
 import { Link } from 'react-router-dom';
 import jeanImage from '../assets/jean.webp';
 import image1 from "../assets/qt=q_95.webp"; // Replace with the actual path to Jean's image
@@ -28,7 +29,7 @@ const About = () => {
   <div
     className="absolute inset-0 bg-cover bg-center filter  scale-100"
     style={{
-      backgroundImage: `url(${backgroundImage})`,
+      backgroundImage: `url(https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExenR4emkxZXNhNHFsMGJ2ZG9zMTdiYzFqYTA2a2o2aWJqaGpoamhkbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zhlIlhaXhO21T6NGzB/giphy.gif)`,
     }}
   ></div>
 
@@ -212,16 +213,16 @@ const About = () => {
 <section className="py-12 rounded-[3rem] bg-gray-100">
   <div className="container mx-auto px-6 md:px-12">
     <h2 className="text-3xl font-bold text-center mb-8">Meet the Team</h2>
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {/* Team Member 1 */}
       <div className="text-center">
         <img
-          src={PAmhonde}
+          src={Kabirat}
           alt="Team Member"
           className="mx-auto rounded-full h-32 mb-4"
         />
-        <h3 className="text-xl font-bold">Arthur Mhonde</h3>
-        <p className="text-gray-600">CEO</p>
+        <h3 className="text-xl font-bold">Kabirat</h3>
+        <p className="text-gray-600">pending info...</p>
         <a
           href="https://www.linkedin.com/in/panashe-arthur-mhonde-2917b6261/"
           target="_blank"
@@ -234,12 +235,12 @@ const About = () => {
       {/* Team Member 2 */}
       <div className="text-center">
         <img
-          src={Cvutete}
+          src={Kudzi}
           alt="Team Member"
           className="mx-auto rounded-full h-32 mb-4"
         />
-        <h3 className="text-xl font-bold">Christopher Vutete</h3>
-        <p className="text-gray-600">Managing Director</p>
+        <h3 className="text-xl font-bold">Kudzi</h3>
+        <p className="text-gray-600">pending info....</p>
         <a
           href="https://www.linkedin.com/in/christopher-vutete-603b8166/"
           target="_blank"
@@ -252,12 +253,12 @@ const About = () => {
       {/* Team Member 3 */}
       <div className="text-center">
         <img
-          src={Cchadiwa}
+          src={Rasna}
           alt="Team Member"
           className="mx-auto rounded-full h-32 mb-4"
         />
-        <h3 className="text-xl font-bold">Craig Chadiwa</h3>
-        <p className="text-gray-600">CTO</p>
+        <h3 className="text-xl font-bold">Rasna</h3>
+        <p className="text-gray-600">pending info</p>
         <a
           href="https://www.linkedin.com/in/craig-chadiwa-16485724a/"
           target="_blank"
@@ -270,12 +271,48 @@ const About = () => {
        {/* Team Member 3 */}
        <div className="text-center">
         <img
-          src={gowani}
+          src={Tincy}
           alt="Team Member"
           className="mx-auto rounded-full h-32 mb-4"
         />
-        <h3 className="text-xl font-bold">Gamuchirai Gowani</h3>
-        <p className="text-gray-600">Head of Marketing</p>
+        <h3 className="text-xl font-bold">Tincy</h3>
+        <p className="text-gray-600">pending info</p>
+        <a
+          href="https://www.linkedin.com/in/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-800 mt-2 inline-block"
+        >
+          <FaLinkedin size={24} />
+        </a>
+      </div>
+
+      <div className="text-center">
+        <img
+          src={Shamli}
+          alt="Team Member"
+          className="mx-auto rounded-full h-32 mb-4"
+        />
+        <h3 className="text-xl font-bold">Shamli</h3>
+        <p className="text-gray-600">info pending</p>
+        <a
+          href="https://www.linkedin.com/in/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-800 mt-2 inline-block"
+        >
+          <FaLinkedin size={24} />
+        </a>
+      </div>
+
+      <div className="text-center">
+        <img
+          src={Tsitsi}
+          alt="Team Member"
+          className="mx-auto rounded-full h-32 mb-4"
+        />
+        <h3 className="text-xl font-bold">Tsitsi</h3>
+        <p className="text-gray-600">info pending</p>
         <a
           href="https://www.linkedin.com/in/"
           target="_blank"
