@@ -113,10 +113,11 @@ const services = [
 
 const Services = () => {
   return (
+    
     <div>
-    <div className="fixed top-0 left-0 w-full z-50">
+    
         <Navbar />
-        </div>
+        
     <section className="max-w-7xl mx-auto px-6 md:px-12 mt-20 mb-20 text-gray-800">
     
       {/* Page Header */}
@@ -310,7 +311,6 @@ crisis situations that are supervised 24/7.
 </div>
 
 <HomeFirstReablement />
-<RecommendedServicesBroxburn />
 <VybrantCarerSupport />
 
 <div className="border-b border-gray-800 "></div>

@@ -14,9 +14,9 @@ export default function VybrantIndependentLiving() {
   return (
     <div>
       {/* Navbar */}
-      <div className="fixed top-0 left-0 w-full z-50">
+      
         <Navbar />
-      </div>
+      
 
       <div className="text-center mt-20 mb-16">
              <img

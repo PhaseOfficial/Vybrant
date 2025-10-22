@@ -20,9 +20,9 @@ const FacilitiesPage = () => {
   return (
   <div>
       {/* Navbar */}
-      <div className="fixed top-0 left-0 w-full z-50">
+      
         <Navbar />
-      </div>
+      
 
     <div className="text-gray-800 mt-20">
       {/* 🔹 Hero Section with Image + Logo Overlay */}

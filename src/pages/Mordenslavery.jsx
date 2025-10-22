@@ -8,9 +8,9 @@ const ModernSlaveryStatementPage = () => {
   return (
     <div>
           {/* Navbar */}
-          <div className="fixed top-0 left-0 w-full z-50">
+          
             <Navbar />
-          </div>
+          
     <div className="min-h-screen flex items-center justify-center py-20 px-6 md:px-12 text-gray-800">
       <section className="w-full max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
         {/* Image Section */}

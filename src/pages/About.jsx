@@ -221,7 +221,7 @@ const About = () => {
           alt="Team Member"
           className="mx-auto rounded-full h-32 mb-4"
         />
-        <h3 className="text-xl font-bold">Kabirat</h3>
+        <h3 className="text-xl font-bold">Kabirat </h3>
         <p className="text-gray-600">pending info...</p>
         <a
           href="https://www.linkedin.com/in/panashe-arthur-mhonde-2917b6261/"

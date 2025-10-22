@@ -16,9 +16,9 @@ import {
 const Careers = () => {
   return (
     <div>
-    <div className="fixed top-0 left-0 w-full z-50">
+    
         <Navbar />
-        </div>
+        
     <section className="max-w-7xl mx-auto px-6 md:px-12 mt-20 mb-20 text-gray-800">
     
       {/* Page Header */}
