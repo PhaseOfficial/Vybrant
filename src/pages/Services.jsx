@@ -311,50 +311,9 @@ crisis situations that are supervised 24/7.
 </div>
 
 <HomeFirstReablement />
+<OnlineAssessmentBooking />
 <VybrantCarerSupport />
 
-<div className="border-b border-gray-800 "></div>
-
-      {/* Services Grid */}
-      <h2 className="text-3xl  mt-10 font-semibold text-center mb-10 text-blue-700">
-        Our Other Services
-      </h2>
-
-      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((service, index) => (
-          <motion.div
-            key={index}
-            className="bg-gray-50 p-8 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: index * 0.15,
-              ease: "easeOut",
-            }}
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <div className="flex items-center gap-4 mb-4">
-              {service.icon}
-              <h3 className="text-2xl font-semibold text-gray-900">
-                {service.title}
-              </h3>
-            </div>
-            <p className="text-gray-700 mb-4 leading-relaxed">
-              {service.description}
-            </p>
-            <h4 className="text-blue-700 font-semibold mb-2">
-              {service.listTitle}
-            </h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-1">
-              {service.items.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ul>
-          </motion.div>
-        ))}
-      </div>
-    </section>
 <section className="mx-auto mt-20 mb-20 bg-red-200 text-gray-800 py-16 px-6 md:px-12">
       <div className="flex flex-col md:flex-row items-center gap-12">
         {/* Left: Image */}
@@ -415,7 +374,52 @@ crisis situations that are supervised 24/7.
                   </div>
       </div>
     </section>
-    <OnlineAssessmentBooking />
+
+
+<div className="border-b border-gray-800 "></div>
+
+      {/* Services Grid */}
+      <h2 className="text-3xl  mt-10 font-semibold text-center mb-10 text-blue-700">
+        Our Other Services
+      </h2>
+
+      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        {services.map((service, index) => (
+          <motion.div
+            key={index}
+            className="bg-gray-50 p-8 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: index * 0.15,
+              ease: "easeOut",
+            }}
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            <div className="flex items-center gap-4 mb-4">
+              {service.icon}
+              <h3 className="text-2xl font-semibold text-gray-900">
+                {service.title}
+              </h3>
+            </div>
+            <p className="text-gray-700 mb-4 leading-relaxed">
+              {service.description}
+            </p>
+            <h4 className="text-blue-700 font-semibold mb-2">
+              {service.listTitle}
+            </h4>
+            <ul className="list-disc list-inside text-gray-700 space-y-1">
+              {service.items.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+
+    
     <Contactus />
 <Footer/>
     </div>

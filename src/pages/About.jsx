@@ -12,7 +12,9 @@ import Tsitsi from '../assets/Tsitsi.png';
 import { FaLinkedin } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import jeanImage from '../assets/jean.webp';
-import image1 from "../assets/qt=q_95.webp"; // Replace with the actual path to Jean's image
+import image1 from "../assets/qt=q_95.webp";
+import Given from '../assets/Given.jpg';
+import Bright from '../assets/Bright.png';
 
 
 const About = () => {
@@ -221,10 +223,11 @@ const About = () => {
           alt="Team Member"
           className="mx-auto rounded-full h-32 mb-4"
         />
-        <h3 className="text-xl font-bold">Kabirat </h3>
-        <p className="text-gray-600">pending info...</p>
+        <h3 className="text-xl font-bold">Kabirat Ogunjimi
+ </h3>
+        
         <a
-          href="https://www.linkedin.com/in/panashe-arthur-mhonde-2917b6261/"
+          href="https://www.linkedin.com/in/kabirat-ogunjimi-13b01b135/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-800 mt-2 inline-block"
@@ -240,7 +243,7 @@ const About = () => {
           className="mx-auto rounded-full h-32 mb-4"
         />
         <h3 className="text-xl font-bold">Kudzi</h3>
-        <p className="text-gray-600">pending info....</p>
+      
         <a
           href="https://www.linkedin.com/in/christopher-vutete-603b8166/"
           target="_blank"
@@ -258,9 +261,9 @@ const About = () => {
           className="mx-auto rounded-full h-32 mb-4"
         />
         <h3 className="text-xl font-bold">Rasna</h3>
-        <p className="text-gray-600">pending info</p>
+        
         <a
-          href="https://www.linkedin.com/in/craig-chadiwa-16485724a/"
+          href="https://www.linkedin.com/in/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-800 mt-2 inline-block"
@@ -275,10 +278,10 @@ const About = () => {
           alt="Team Member"
           className="mx-auto rounded-full h-32 mb-4"
         />
-        <h3 className="text-xl font-bold">Tincy</h3>
-        <p className="text-gray-600">pending info</p>
+        <h3 className="text-xl font-bold">Tincy Brijin Freeda</h3>
+       
         <a
-          href="https://www.linkedin.com/in/"
+          href="https://www.linkedin.com/in/tincybf15122001/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-800 mt-2 inline-block"
@@ -294,7 +297,7 @@ const About = () => {
           className="mx-auto rounded-full h-32 mb-4"
         />
         <h3 className="text-xl font-bold">Shamli</h3>
-        <p className="text-gray-600">info pending</p>
+        
         <a
           href="https://www.linkedin.com/in/"
           target="_blank"
@@ -311,10 +314,10 @@ const About = () => {
           alt="Team Member"
           className="mx-auto rounded-full h-32 mb-4"
         />
-        <h3 className="text-xl font-bold">Tsitsi</h3>
-        <p className="text-gray-600">info pending</p>
+        <h3 className="text-xl font-bold">Tsitsi Svosve</h3>
+        
         <a
-          href="https://www.linkedin.com/in/"
+          href="https://www.linkedin.com/in/tsitsi-svosve-5a3835108/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-800 mt-2 inline-block"
@@ -322,6 +325,64 @@ const About = () => {
           <FaLinkedin size={24} />
         </a>
       </div>
+
+<div className="text-center">
+        <img
+          src={jeanImage}
+          alt="Team Member"
+          className="mx-auto rounded-full h-32 mb-4"
+        />
+        <h3 className="text-xl font-bold">Jean Sigauke</h3>
+        
+        <a
+          href="https://www.linkedin.com/in/gincigaz/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-800 mt-2 inline-block"
+        >
+          <FaLinkedin size={24} />
+        </a>
+      </div>
+
+
+      <div className="text-center">
+        <img
+          src={Given}
+          alt="Team Member"
+          className="mx-auto rounded-full h-32 mb-4"
+        />
+        <h3 className="text-xl font-bold">Given Sigauke</h3>
+      
+        <a
+          href="https://www.linkedin.com/in/given-sigauke-0abab023b/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-800 mt-2 inline-block"
+        >
+          <FaLinkedin size={24} />
+        </a>
+      </div>
+
+
+      <div className="text-center">
+        <img
+          src={Bright}
+          alt="Team Member"
+          className="mx-auto rounded-full h-32 mb-4"
+        />
+        <h3 className="text-xl font-bold">Bright Murewa</h3>
+        
+        <a
+          href="https://www.linkedin.com/in/bright-murewa-fcca-3116a474/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-800 mt-2 inline-block"
+        >
+          <FaLinkedin size={24} />
+        </a>
+      </div>
+
+
     </div>
   </div>
 </section>

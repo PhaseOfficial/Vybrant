@@ -80,7 +80,7 @@ const VybrantCarerSupport = () => {
   ];
 
   return (
-    <section className="bg-gray-50 rounded-3xl py-20 mb-10 px-6 md:px-12 text-gray-800">
+    <section className="bg-gray-50 rounded-3xl mt-10 py-20 mb-10 px-6 md:px-12 text-gray-800">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center mb-20">
         {/* Left: Image */}
         <motion.div
