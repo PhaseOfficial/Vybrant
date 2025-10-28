@@ -3,6 +3,8 @@ import { FaHeart, FaUsers, FaComments, FaShieldAlt } from "react-icons/fa";
 // Replace this with your image import
 import MentalHealthImg from "../assets/mental-health.png"; 
 import image6 from "../assets/services.png";
+import { FaPlus, FaTimes } from "react-icons/fa";
+import SupportedLivingCard from "../components/SupportedLivingCard";
 
 import {
   FaHome,
@@ -23,93 +25,9 @@ import OnlineAssessmentBooking from "../components/OnlineAssessmentBooking";
 import HomeFirstReablement from "../components/HomeFirstReablement";
 import VybrantCarerSupport from "../components/VybrantCarerSupport";
 import RecommendedServicesBroxburn from "../components/RecommendedServicesBroxburn";
+import ServicesSection from "../components/ServicesSection";
 
-const services = [
-  {
-    title: "Home Care Service",
-    icon: <FaHome className="text-blue-600 w-10 h-10" />,
-    description:
-      "Our Home Care Services offer a range of in-home care and support tailored to your daily needs.",
-    listTitle: "Support will include:",
-    items: [
-      "Personal care support",
-      "Medication administration",
-      "Meal preparation",
-      "Light housework",
-      "Support with transfers",
-    ],
-  },
-  {
-    title: "After Hospital Care",
-    icon: <FaHospitalUser className="text-blue-600 w-10 h-10" />,
-    description:
-      "Support offered on a short-term basis to help you manage at home after being in hospital.",
-    listTitle: "When to consider it:",
-    items: [
-      "After having surgery",
-      "Lost mobility / stroke",
-      "When prescribed bed rest",
-      "Increased falls risk",
-      "When feeling weak",
-    ],
-  },
-  {
-    title: "Specialist Care",
-    icon: <FaHeartbeat className="text-blue-600 w-10 h-10" />,
-    description:
-      "Helping people with physical, mental, or chronic illnesses live independently and with dignity.",
-    listTitle: "Our areas of speciality:",
-    items: [
-      "Diabetes management",
-      "Multiple sclerosis (MS)",
-      "Dementia & Alzheimer’s",
-      "Parkinson’s",
-      "End-of-Life care",
-    ],
-  },
-  {
-    title: "Respite Care",
-    icon: <FaHandsHelping className="text-blue-600 w-10 h-10" />,
-    description:
-      "Temporary relief for a primary caregiver, allowing them to rest while we provide quality care.",
-    listTitle: "Where this can happen:",
-    items: [
-      "In the individual's home",
-      "In a care/residential home",
-      "In temporary accommodation",
-      "In our respite living facility",
-      "On vacation",
-    ],
-  },
-  {
-    title: "Companionship Service",
-    icon: <FaUserFriends className="text-blue-600 w-10 h-10" />,
-    description:
-      "Reducing loneliness and promoting social connection. We keep you company and support your wellbeing.",
-    listTitle: "Things we can do:",
-    items: [
-      "Doing activities/going out",
-      "Escorting to coffee groups",
-      "Assisting with routines",
-      "Visiting friends or family",
-      "Befriending",
-    ],
-  },
-  {
-    title: "Live-in Care",
-    icon: <FaSmile className="text-blue-600 w-10 h-10" />,
-    description:
-      "Round-the-clock care from a dedicated live-in carer, ensuring safety, comfort, and companionship.",
-    listTitle: "What is included:",
-    items: [
-      "Support with personal care",
-      "Household chores",
-      "Meal preparation",
-      "Companionship",
-      "Support with safe living",
-    ],
-  },
-];
+
 
 const Services = () => {
   return (
@@ -130,11 +48,11 @@ const Services = () => {
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Your Trusted Home Care Provider
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        {/* <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Vybrant Care Services is dedicated to enhancing the quality of life
           for our clients. Learn more about our skilled home care solutions
           designed for your comfort.
-        </p>
+        </p> */}
       </div>
       <div className="mb-10 relative">
                 <img
@@ -144,6 +62,9 @@ const Services = () => {
                 />
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
+<div className="border-b border-gray-800 mb-10 mt-10 "></div>
+              <ServicesSection />
+
 <div className="max-w-3xl mx-auto text-center border-t border-gray-600 mb-16">
 <h2 className="text-4xl md:text-5xl font-bold mt-6 text-blue-700 mb-3">
       Mental Health Support Services
@@ -154,14 +75,14 @@ const Services = () => {
 
       <div className="border-t-2 border-gray-300 w-20 mb-6"></div>
 
-      <p className="text-gray-700 italic mb-8 text-lg">
+      {/* <p className="text-gray-700 italic mb-8 text-lg">
         Because everyone is different and every journey is unique.
-      </p>
-      <p className="text-gray-700 mb-12 leading-relaxed">
+      </p> */}
+      {/* <p className="text-gray-700 mb-12 leading-relaxed">
         At Vybrant Care Services, we understand that no two people experience mental health
         the same way. That’s why our support is person-centred, tailored to your individual
         needs, and designed to help you live a happy, fulfilling, and independent life.
-      </p>
+      </p> */}
 
 </div>
 
@@ -270,44 +191,7 @@ const Services = () => {
 </section>
 
 <div className="text-center mb-20">
-
-<p className=" max-w-3xl mx-auto text-center mb-16"> We have accommodation that we can use for emergency admissions or in 
-crisis situations that are supervised 24/7.
- This is focusing on young adults and adults 18+.</p>
-
-<Link to="/Supportedliving" target="_blank"
-            rel="noopener noreferrer">
-                                      <button
-                                      className="
-                                        relative overflow-hidden
-                                        rounded-full border-2 border-pink-600 text-white-500 
-                                        px-6 py-3 mt-8 font-semibold
-                                        transition-all duration-300 ease-in-out
-                                        group
-                                      "
-                                    >
-                                      <span
-                                        className="
-                                          relative z-10 transition-colors duration-300 ease-in-out
-                                          group-hover:text-white
-                                        "
-                                      >
-                                        <span className="text-2xl font-semibold  flex items-center gap-2">
-              <FaHome className="" /> Supported Living
-            </span>
-                                      </span>
-                                      <span
-                                        className="
-                                          absolute inset-0 bg-pink-500 
-                                          translate-x-[-100%] 
-                                          group-hover:translate-x-0
-                                          transition-transform duration-300 ease-in-out
-                                          z-0
-                                        "
-                                      ></span>
-                                    </button>
-                                    
-                                    </Link>
+  <SupportedLivingCard />
 </div>
 
 <HomeFirstReablement />
@@ -378,45 +262,8 @@ crisis situations that are supervised 24/7.
 
 <div className="border-b border-gray-800 "></div>
 
-      {/* Services Grid */}
-      <h2 className="text-3xl  mt-10 font-semibold text-center mb-10 text-blue-700">
-        Our Other Services
-      </h2>
 
-      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((service, index) => (
-          <motion.div
-            key={index}
-            className="bg-gray-50 p-8 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: index * 0.15,
-              ease: "easeOut",
-            }}
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <div className="flex items-center gap-4 mb-4">
-              {service.icon}
-              <h3 className="text-2xl font-semibold text-gray-900">
-                {service.title}
-              </h3>
-            </div>
-            <p className="text-gray-700 mb-4 leading-relaxed">
-              {service.description}
-            </p>
-            <h4 className="text-blue-700 font-semibold mb-2">
-              {service.listTitle}
-            </h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-1">
-              {service.items.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ul>
-          </motion.div>
-        ))}
-      </div>
+     
     </section>
 
     

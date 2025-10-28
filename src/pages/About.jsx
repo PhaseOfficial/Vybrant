@@ -15,6 +15,7 @@ import jeanImage from '../assets/jean.webp';
 import image1 from "../assets/qt=q_95.webp";
 import Given from '../assets/Given.jpg';
 import Bright from '../assets/Bright.png';
+import Exploreprod from '../components/Exploreprod';
 
 
 const About = () => {
@@ -25,7 +26,7 @@ const About = () => {
     <div className="bg-cover bg-center h-screen" >
       {/* Hero Section */}
       <section
-  className="relative flex items-center p-8 rounded-[3rem] mt-20 flex-col md:pt-20 md:p-12 md:pb-20 sd:p-8 overflow-hidden"
+  className="relative flex mb-10 items-center p-8 rounded-[3rem] mt-20 flex-col md:pt-20 md:p-12 md:pb-20 sd:p-8 overflow-hidden"
 >
   {/* Blurred background layer */}
   <div
@@ -53,6 +54,7 @@ const About = () => {
         </div>
         
       </section>
+      <Exploreprod />
 
       {/* Company Description */}
       <section className="py-12">
@@ -64,8 +66,8 @@ const About = () => {
     >
       <div className="container mx-auto px-6 md:px-12 border border-pink-500 rounded-[3rem] py-12">
           <div className="max-w-4xl mx-auto p-8 text-pink-500">
-          <h2 className="text-4xl font-bold text-center mb-8">What We Offer</h2>
-          <p className="text-center text-2xl">
+          <h2 className="text-2xl font-bold text-center mb-8">What We Offer</h2>
+          <p className="text-center text-xl">
           We offer a range of tailored home-care services designed to meet each client’s unique needs, 
           ensuring a high standard of support and care. Our team is committed to delivering compassionate, 
           professional assistance that promotes well-being and independence. </p>
@@ -103,8 +105,8 @@ const About = () => {
           </div>
 </div>
 <div className="max-w-4xl mx-auto p-8 text-blue-400">
-          <h2 className="text-4xl font-bold text-center mb-8">Our Staff, Our Strength</h2>
-          <p className="text-center text-2xl">
+          <h2 className="text-2xl font-bold text-center mb-8">Our Staff, Our Strength</h2>
+          <p className="text-center text-xl">
           Our team is our greatest asset. We are committed to recruiting, training, 
           and supporting compassionate professionals who uphold the highest standards of care, 
           always putting dignity, respect, 

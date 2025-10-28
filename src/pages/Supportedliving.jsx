@@ -24,7 +24,7 @@ export default function VybrantIndependentLiving() {
             alt="Company Logo"
             className="h-40 w-auto center mx-auto mb-6"
           />
-          <h1 className="text-4xl font-bold text-blue-400 mb-4">Independent Living</h1>
+          
           </div>
 
       {/* Main Section */}

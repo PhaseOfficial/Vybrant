@@ -1,6 +1,6 @@
 import HeroSection from '../components/HeroSection';
 import Navbar from '../components/Navbar';
-import Explore from '../components/Exploreprod';
+// import Explore from '../components/Exploreprod';
 import '../App.css';
 import Contactus from '../components/Contactus';
 import Footer from '../components/footer';
@@ -17,7 +17,7 @@ export default function Home() {
             
             <HeroSection className=""/>
             <Offer className=""/>
-            <Explore className=""/>
+            {/* <Explore className=""/> */}
             <Testimonials className="mt-20"/>
             <Trust className=""/>
             <Companies className=""/>

@@ -28,12 +28,12 @@ const ScotlandBranch = () => {
     <div className="text-gray-800 mt-8">
       {/* Hero Section */}
       <section className="relative w-full h-[60vh] flex rounded-[3rem] items-center justify-center bg-cover  bg-center"
-        style={{ backgroundImage: `url(${ScotlandImg})` }}>
+        style={{ backgroundImage: `url(https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmF5ZTllcmp0YnZvOGIya2lta25vc2dvb3VlamE5aHVxaDQwZzhsOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/J8bmJxUfTjfTumBh7u/giphy.gif)` }}>
         <div className="absolute inset-0 bg-black rounded-[3rem] bg-opacity-50"></div>
         <div className="relative z-10 text-center text-white px-6">
           <img src={Logo} alt="Vybrant Care Logo" className="mx-auto mb-4" />
           <h1 className="text-4xl md:text-5xl font-bold mb-3">
-            Home Care Services for Broxburn, Scotland
+            Home Care Services for Scotland
           </h1>
           <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">
             Supporting independence and wellbeing for individuals and families across West Lothian.
@@ -50,10 +50,7 @@ const ScotlandBranch = () => {
           viewport={{ once: true }}
           className="text-lg text-gray-700 leading-relaxed mb-10"
         >
-          As a new home care organisation in <strong>Broxburn, Scotland</strong>, aligning our services
-          with the priorities of the <strong>West Lothian Health and Social Care Partnership (HSCP)</strong>
-          ensures sustainability, compliance, and community impact. Below are the key service areas
-          we provide for meaningful and person-centred care.
+          Our services are designed to align with the priorities of the Care Inspectorate and the Health and Social Care Partnership (HSCP), ensuring care that is sustainable, compliant, and truly impactful. Explore the key areas where we provide meaningful, person-centred support. 
         </motion.p>
 
         {/* Service Sections */}

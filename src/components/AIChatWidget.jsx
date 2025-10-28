@@ -47,7 +47,7 @@ Always maintain confidentiality and encourage contacting official numbers for pe
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: "ai", text: "Hello 👋 I'm Vybrant AI Assistant — how can I help you today?" },
+    { sender: "ai", text: "Hello 👋 I'm Vybrant AI Assistant how can I help you today?" },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);

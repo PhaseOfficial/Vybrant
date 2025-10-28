@@ -9,17 +9,17 @@ import Img3 from "../assets/d3.png";
 const storyData = [
   {
     title: "The Beginning",
-    text: "Vybrant Care Services was born from a vision to transform home care.",
+    text: "Vybrant Care Services was born from a vision to transform home care,bringing together professional expertise and genuine compassion to provide personalised support that truly improves lives.",
     image: Img1,
   },
   {
     title: "Building Trust",
-    text: "We recognised that truly excellent care goes beyond basic support, it’s about enabling people to live life on their own terms, in their own homes.",
+    text: "We realised excellent care goes beyond basic support. It’s about empowering people to live life on their own terms, in the comfort and familiarity of their own homes, with dignity and independence.",
     image: Img2,
   },
   {
     title: "Expanding Horizons",
-    text: "Our journey is built on countless moments of making a real difference in people’s lives, one person at a time.",
+    text: "Our journey is shaped by countless moments of making a real difference, one life at a time, as we continue to grow and bring compassionate care to more people and homes.",
     image: Img3,
   },
 ];

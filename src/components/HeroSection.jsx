@@ -23,11 +23,12 @@ export default function HeroSection() {
       <h1 className="text-4xl md:text-5xl font-montserrat font-black mb-6">
     We Are Making a Real Difference
   </h1>
-  <p className="text-lg text-black md:text-xl max-w-3xl mx-auto leading-relaxed">
+  {/* <p className="text-lg text-black md:text-xl max-w-3xl mx-auto leading-relaxed">
     Vybrant Care Services enriches and enhances the lives of those needing care by
     delivering exceptional, personalised support that enables independence, dignity
     and wellbeing within the comfort of their own homes.
-  </p>
+  </p> */}
+   <Countuop/>
    <div>
 
 <Link to="/Services">
@@ -63,7 +64,7 @@ export default function HeroSection() {
 
 
 </div>
-  <Countuop/>
+ 
   </div>
 
    <div className="absolute inset-0 z-0 blur-lg">

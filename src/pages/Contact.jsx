@@ -16,11 +16,8 @@ const ContactUs = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <h1 className="text-5xl font-bold mb-4">Contact Us</h1>
-          <p className="text-lg mb-8">
-            We'd love to hear from you! Fill out the form below or reach out directly.
-          </p>
-          <ContactForm /> {/* Replace the existing form with the new ContactForm component */}
+         
+         <ContactForm />  {/* Replace the existing form with the new ContactForm component */}
           
         </motion.div>
         <Contactus id="contact" />

@@ -1,62 +1,155 @@
 import React from "react";
+import { motion } from "framer-motion";
+import {
+  FaHandsHelping,
+  FaShieldAlt,
+  FaUserFriends,
+  FaClock,
+  FaHome,
+  FaStar,
+} from "react-icons/fa";
 import PartnersSection from "./PartnersSection";
 
 export default function WhyChooseUs() {
-  return (
-    <section className="py-20 px-6 border-t border-b mt-10 border-gray-400">
-      
-      
-      <div className="max-w-5xl mx-auto text-center">
-        {/* Main Heading */}
-        <h2 className="text-4xl md:text-5xl font-bold text-pink-500 mb-12">
-          Why Choose Us?
-        </h2>
+  const features = [
+    {
+      icon: <FaHandsHelping className="w-10 h-10 text-pink-500 mb-4" />,
+      title: "Person-Centred Care",
+      desc: "Every individual is unique — so is our care. We design support plans that revolve around your preferences, goals, and lifestyle.",
+    },
+    {
+      icon: <FaShieldAlt className="w-10 h-10 text-pink-500 mb-4" />,
+      title: "CQC-Regulated Standards",
+      desc: "As a fully regulated provider, we uphold the highest standards in safety, quality, and accountability across all our services.",
+    },
+    {
+      icon: <FaUserFriends className="w-10 h-10 text-pink-500 mb-4" />,
+      title: "Compassionate Professionals",
+      desc: "Our dedicated carers and nurses are trained to deliver not only skilled assistance but genuine kindness and empathy every day.",
+    },
+  ];
 
-        {/* Intro Text */}
-        <p className="text-gray-700 text-lg md:text-xl leading-relaxed mb-12">
-          At Vybrant Care Services, we take pride in our team of dedicated and passionate caregivers
-          who are committed to delivering exceptional support. Using a person-centred approach,
-          we tailor our services to meet your unique needs, ensuring you feel valued and respected
-          at every step. Our trained professionals are equipped to support a wide range of care
-          requirements, making your care experience both enjoyable and stress-free. As a CQC-regulated
-          provider, we uphold the highest standards, offering diverse and reliable care services you can trust.
-        </p>
+  const benefits = [
+    {
+      icon: <FaClock className="w-10 h-10 text-blue-600 mb-4" />,
+      title: "Flexible 24/7 Support",
+      desc: "Round-the-clock availability, designed around your schedule and needs for complete peace of mind.",
+    },
+    {
+      icon: <FaHome className="w-10 h-10 text-blue-600 mb-4" />,
+      title: "Comfort of Home",
+      desc: "Receive exceptional care without leaving your familiar surroundings, preserving your independence and comfort.",
+    },
+    {
+      icon: <FaStar className="w-10 h-10 text-blue-600 mb-4" />,
+      title: "Reliable & Consistent Service",
+      desc: "We believe in continuity — your preferred carers, your preferred routines, every time.",
+    },
+  ];
+
+  return (
+    <section className="py-20 px-6 mt-10  relative overflow-hidden">
+      <div className="max-w-6xl mx-auto text-center">
+        {/* Section Heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-4xl md:text-5xl font-bold text-pink-500 mb-8"
+        >
+          Why Choose Us?
+        </motion.h2>
+
+        {/* Intro */}
+        {/* <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+          className="text-gray-700 text-lg md:text-xl leading-relaxed mb-16 max-w-4xl mx-auto"
+        >
+          At Vybrant Care Services, we’re more than caregivers — we’re partners in your wellbeing.
+          Using a compassionate, person-centred approach, we ensure you always feel valued,
+          respected, and empowered to live your best life. As a CQC-regulated provider,
+          we’re committed to exceptional quality and professional excellence.
+        </motion.p> */}
 
         {/* What You Can Expect */}
-        <div className="mb-12 text-left md:text-left">
-          <h3 className="text-3xl font-bold text-blue-900 mb-6">
-            What You Can Expect?
-          </h3>
-          <p className="text-gray-700 mb-4">
-            We are committed to delivering a high-quality service that empowers you to live independently in the comfort of your own home. You can expect:
-          </p>
-          <ul className="list-disc list-inside text-gray-700 space-y-2 pl-4">
-            <li>Personalised, specialist care tailored to meet your individual needs</li>
-            <li>Advocacy and guidance when needed, promoting a safer, more supported experience</li>
-            <li>Assistance with achieving your goals and managing daily living activities (ADLs)</li>
-            <li>Flexible care packages designed around your lifestyle, available 24/7 for complete peace of mind</li>
-          </ul>
-          <p className="text-gray-700 mt-4">
-            Your wellbeing is at the heart of everything we do.
-          </p>
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-3xl font-bold text-blue-900 mb-10"
+        >
+          What You Can Expect
+        </motion.h3>
+
+        {/* Expectation Cards */}
+        <div className="grid md:grid-cols-3 gap-10 mb-16">
+          {features.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-transform hover:scale-105 duration-300 text-left"
+            >
+              {item.icon}
+              <h4 className="text-xl font-semibold text-blue-800 mb-3">
+                {item.title}
+              </h4>
+              <p className="text-gray-700 leading-relaxed">{item.desc}</p>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Benefits */}
-        <div className="text-left md:text-left">
-          <h3 className="text-3xl font-bold text-blue-900 mb-6">
-            What Are The Benefits?
-          </h3>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Enjoy the comfort and freedom of personalised care at home with our support, living in your own home for longer, maintaining your routine and independence. Receive dedicated 1:1 care that respects who you are, giving you peace of mind and confidence each day.
-          </p>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Stay close to your loved ones and welcome visits on your terms. Benefit from a consistent, reliable service with continuity of care, and have a real say in how and where your care is delivered, always centred around your needs and preferences.
-          </p>
-          <p className="text-gray-700 font-semibold">
-            Live life on your own terms, in your home.
-          </p>
+        {/* Benefits Section */}
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-3xl font-bold text-blue-900 mb-10"
+        >
+          What Are The Benefits?
+        </motion.h3>
+
+        {/* Benefit Cards */}
+        <div className="grid md:grid-cols-3 gap-10">
+          {benefits.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-transform hover:scale-105 duration-300 text-left"
+            >
+              {item.icon}
+              <h4 className="text-xl font-semibold text-blue-800 mb-3">
+                {item.title}
+              </h4>
+              <p className="text-gray-700 leading-relaxed">{item.desc}</p>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Closing Line */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-gray-800 font-semibold text-xl mt-16"
+        >
+          Live life on your own terms —{" "}
+          <span className="text-pink-500">in your home, with Vybrant Care Services.</span>
+        </motion.p>
       </div>
+
       <PartnersSection />
     </section>
   );

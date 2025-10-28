@@ -58,12 +58,12 @@ const HomeFirstReablement = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-gray-700 leading-relaxed mb-10"
           >
-          <p className="text-gray-700 mb-12 leading-relaxed">
+          {/* <p className="text-gray-700 mb-12 leading-relaxed">
             At Vybrant Care Services, our Home First Recovery & Reablement Service is designed to help people regain their independence after a hospital stay. The service focuses on streamlining hospital discharge, reducing delayed discharges, and supporting safe, confident recovery at home.
             <br />
             <br />
             We work in collaboration with health and social care professionals to ensure a single, consistent process supported by integrated data systems providing the best outcomes for every individual.
-          </p>
+          </p> */}
           </motion.p>
           </div>
     <section className="bg-pink-50 py-20 mb-20 rounded-3xl px-6 md:px-12 text-gray-800">

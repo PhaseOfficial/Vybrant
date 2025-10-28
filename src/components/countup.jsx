@@ -23,8 +23,8 @@ const CountUp = ({ target, duration }) => {
 
 const App = () => {
   return (
-    <div style={{ fontSize: '30px', fontWeight: 'bold' }}>
-      Join the <CountUp target={1000} duration={2000} /> satisfied clients
+    <div style={{ fontSize: '30px', fontWeight: '' }}>
+      Join the <CountUp target={100} duration={2000} /> satisfied clients
     </div>
   );
 };
