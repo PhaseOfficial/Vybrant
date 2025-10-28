@@ -42,7 +42,7 @@ const ContactForm = () => {
   };
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = "263777000000"; // Replace with your WhatsApp number (no "+" sign)
+    const phoneNumber = "+44 7828 402043"; // Replace with your WhatsApp number (no "+" sign)
     const text = encodeURIComponent("Hello! I’d like to ask about your services.");
     window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
   };
