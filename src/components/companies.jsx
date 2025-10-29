@@ -8,7 +8,7 @@ import {
   FaHome,
   FaStar,
 } from "react-icons/fa";
-import PartnersSection from "./PartnersSection";
+
 
 export default function WhyChooseUs() {
   const features = [
@@ -150,7 +150,7 @@ export default function WhyChooseUs() {
         </motion.p>
       </div>
 
-      <PartnersSection />
+      
     </section>
   );
 }

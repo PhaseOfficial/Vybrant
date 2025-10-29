@@ -4,9 +4,10 @@ import Navbar from '../components/Navbar';
 import '../App.css';
 import Contactus from '../components/Contactus';
 import Footer from '../components/footer';
-import Companies from '../components/companies';
+// import Companies from '../components/companies';
 import Offer from '../components/Offer';
 import Trust from '../components/Trust';
+import PartnersSection from '../components/PartnersSection';
 // import Carreer from '../components/Carreer';
 // import Testimonials from '../components/Testimonials';
 
@@ -20,8 +21,9 @@ export default function Home() {
             {/* <Explore className=""/> */}
             {/* <Testimonials className="mt-20"/> */}
             <Trust className=""/>
-            <Companies className=""/>
+            {/* <Companies className=""/> */}
             {/* <Carreer className=""/> */}
+            <PartnersSection />
             <Contactus className="mt-20" id="contact"/>
             <Footer className="mt-20"/>
 

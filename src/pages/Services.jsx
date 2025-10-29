@@ -5,6 +5,7 @@ import MentalHealthImg from "../assets/mental-health.png";
 import image6 from "../assets/services.png";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import SupportedLivingCard from "../components/SupportedLivingCard";
+import Companies from "../components/companies";
 
 import {
   FaHome,
@@ -266,7 +267,7 @@ const Services = () => {
      
     </section>
 
-    
+    <Companies className=""/>
     <Contactus />
 <Footer/>
     </div>
