@@ -45,11 +45,11 @@ const HomeFirstReablement = () => {
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-4xl font-bold text-blue-800 mb-6"
           >
-          <h2 className="text-4xl md:text-5xl font-bold mt-6 text-blue-700 mb-3">
+          <h2 className="text-2xl font-bold mt-6 text-blue-700 mb-3">
             Home First Recovery & Reablement Service</h2>
           </motion.h2>
 <p className="text-lg font-medium text-pink-600 mb-6">
-        Serving Sheffield & East Riding
+        Empowering Home-based Recovery
       </p>
           <motion.p
             initial={{ opacity: 0 }}

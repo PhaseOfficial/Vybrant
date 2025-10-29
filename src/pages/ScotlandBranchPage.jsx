@@ -7,8 +7,9 @@ import Logo from "../assets/qt=q_95.webp"; // 🏷️ your logo
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import { FaHandsHelping, FaGlobe, FaBolt} from "react-icons/fa"; // icons
-import ServiceCards from "./serviceCards";
+import ServiceCards from "../components/serviceCards";
 import Contactus from "../components/Contactus";
+
 
 
 
@@ -20,6 +21,7 @@ const ScotlandBranch = () => {
     { label: "Inclusion", icon: <FaGlobe /> },
     { label: "Responsive Care", icon: <FaBolt /> },
     { label: "Wellbeing", icon: <FaUsers /> },
+    { label: "Empowerment", icon: <FaShieldAlt /> },
   ];
 
   return (
@@ -58,7 +60,7 @@ const ScotlandBranch = () => {
           {[
   {
     icon: FaHome,
-    title: "Core Domiciliary (Personal) Care",
+    title: "Core Care at Home (Personal Support)",
     points: [
       "Personal care – washing, dressing, toileting",
       "Medication support and prompting",
@@ -151,7 +153,7 @@ const ScotlandBranch = () => {
 
       <p className="max-w-3xl mx-auto text-gray-700 text-lg leading-relaxed mb-12 px-4">
         Vybrant Care Services <strong>Scotland</strong> is committed to empowering individuals
-        in <strong>Broxburn</strong> and <strong>West Lothian</strong> to live independently,
+        in and <strong>West Lothian and surrounding areas</strong> to live independently,
         safely, and with dignity in their own homes. Our mission is guided by the
         principles of Scotland’s <strong>Health and Social Care Standards</strong>.
       </p>

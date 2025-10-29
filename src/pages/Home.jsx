@@ -8,7 +8,7 @@ import Companies from '../components/companies';
 import Offer from '../components/Offer';
 import Trust from '../components/Trust';
 // import Carreer from '../components/Carreer';
-import Testimonials from '../components/Testimonials';
+// import Testimonials from '../components/Testimonials';
 
 export default function Home() {
     return (
@@ -18,7 +18,7 @@ export default function Home() {
             <HeroSection className=""/>
             <Offer className=""/>
             {/* <Explore className=""/> */}
-            <Testimonials className="mt-20"/>
+            {/* <Testimonials className="mt-20"/> */}
             <Trust className=""/>
             <Companies className=""/>
             {/* <Carreer className=""/> */}

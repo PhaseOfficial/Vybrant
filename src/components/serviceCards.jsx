@@ -8,7 +8,7 @@ import SpecialistImg from "../assets/emergency.png";
 
 const serviceCards = [
   {
-    title: "Supported Living / 24-Hour Packages",
+    title: "Support at Home / 24-Hour Packages",
     image: SupportedImg,
     text: "We provide 24-hour support for individuals with complex needs in their own homes. This includes people with learning disabilities, autism, or those requiring structured support under local authority frameworks.",
   },
@@ -17,11 +17,11 @@ const serviceCards = [
     image: CommunityImg,
     text: "We actively promote social inclusion by offering check-in visits, help with errands, and companionship services. Our outreach fosters independence and connection within the community.",
   },
-  {
-    title: "Specialist Services (Phase 2 – Expansion)",
-    image: SpecialistImg,
-    text: "Planned future services include palliative care, complex medical support (PEG feeding, catheter, stoma care), and recovery programs for domestic abuse survivors.",
-  },
+  // {
+  //   title: "Specialist Services (Phase 2 – Expansion)",
+  //   image: SpecialistImg,
+  //   text: "Planned future services include palliative care, complex medical support (PEG feeding, catheter, stoma care), and recovery programs for domestic abuse survivors.",
+  // },
 ];
 
 export default function ScotlandExtraServices() {
@@ -37,7 +37,7 @@ export default function ScotlandExtraServices() {
         Additional Support Services
       </motion.h2>
 
-      <div className="grid md:grid-cols-3 gap-10">
+      <div className="grid md:grid-cols-2 gap-10">
         {serviceCards.map(({ title, image, text }, i) => (
           <motion.div
             key={i}
@@ -48,7 +48,7 @@ export default function ScotlandExtraServices() {
             className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300"
           >
             {/* Image */}
-            <div className="h-56 w-full overflow-hidden">
+            <div className="h-60 w-full overflow-hidden">
               <img
                 src={image}
                 alt={title}

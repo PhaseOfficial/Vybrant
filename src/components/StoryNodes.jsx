@@ -9,7 +9,7 @@ import Img3 from "../assets/d3.png";
 const storyData = [
   {
     title: "The Beginning",
-    text: "Vybrant Care Services was born from a vision to transform home care,bringing together professional expertise and genuine compassion to provide personalised support that truly improves lives.",
+    text: "Vybrant Care Services was born from a vision to transform home care, bringing together professional expertise and genuine compassion to provide personalised support that truly improves lives.",
     image: Img1,
   },
   {
@@ -24,39 +24,43 @@ const storyData = [
   },
 ];
 
-export default function StoryNodes() {
+export default function StoryCardsSection() {
   return (
-    <section className="relative w-full rounded-[3rem] bg-gray-100 min-h-screen py-20 px-6 flex flex-col items-center">
-      {/* Vertical timeline line */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-pink-400 rounded-full"></div>
+    <section className="w-full rounded-2xl bg-gray-100 py-20 px-6">
+      <div className="max-w-6xl mx-auto text-center mb-16">
+        <h2 className="text-4xl font-bold text-pink-600 mb-4">
+          Our Journey
+        </h2>
+        <p className="text-gray-600 max-w-3xl mx-auto">
+          From humble beginnings to becoming a trusted name in care, our story reflects dedication,
+          compassion, and the pursuit of excellence.
+        </p>
+      </div>
 
-      {storyData.map((story, index) => (
-        <motion.div
-          key={index}
-          className={`relative bg-white rounded-3xl shadow-lg overflow-hidden w-full max-w-xl mb-24 z-10 ${
-            index % 2 === 0 ? "self-start" : "self-end"
-          }`}
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          {/* Image section */}
-          <img
-            src={story.image}
-            alt={story.title}
-            className="w-full h-64 object-cover"
-          />
-
-          {/* Text section */}
-          <div className="p-8">
-            <h2 className="text-2xl font-bold text-pink-500 mb-4">
-              {story.title}
-            </h2>
-            <p className="text-gray-700">{story.text}</p>
-          </div>
-        </motion.div>
-      ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+        {storyData.map((story, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+          >
+            <img
+              src={story.image}
+              alt={story.title}
+              className="w-full h-56 object-cover"
+            />
+            <div className="p-6 text-left">
+              <h3 className="text-xl font-semibold text-pink-600 mb-3">
+                {story.title}
+              </h3>
+              <p className="text-gray-700">{story.text}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </section>
   );
 }

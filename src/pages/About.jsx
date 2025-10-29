@@ -216,7 +216,7 @@ const About = () => {
       {/* Team Section */}
 <section className="py-12 rounded-[3rem] bg-gray-100">
   <div className="container mx-auto px-6 md:px-12">
-    <h2 className="text-3xl font-bold text-center mb-8">Meet the Team</h2>
+    <h2 className="text-3xl font-bold text-center mb-8">Meet Some of Our Team</h2>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {/* Team Member 1 */}
       <div className="text-center">

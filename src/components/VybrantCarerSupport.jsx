@@ -153,7 +153,7 @@ const VybrantCarerSupport = () => {
       </motion.div>
 
       {/* Flexible & Personalised Respite Care */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -182,7 +182,7 @@ const VybrantCarerSupport = () => {
             </motion.div>
           ))}
         </div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Making Respite Accessible */}
       <motion.div
