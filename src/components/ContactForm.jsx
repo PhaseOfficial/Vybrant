@@ -39,6 +39,35 @@ const ContactForm = () => {
       setMessage("");
       setSubscribe(false);
     }
+    if (!error) {
+  await fetch(
+    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        phone,
+        postcode,
+        message,
+        subscribe,
+      }),
+    }
+  );
+
+  setSuccess("Thank you! We’ll get back to you as soon as we can.");
+  setName("");
+  setEmail("");
+  setPhone("");
+  setPostcode("");
+  setMessage("");
+  setSubscribe(false);
+}
+
   };
 
   const handleWhatsAppClick = () => {

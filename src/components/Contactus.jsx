@@ -5,6 +5,7 @@ import { IoMdPin } from "react-icons/io";
 import { supabase } from '../lib/supabaseClient';
 
 const Contactus = () => {
+  const [subscribe, setSubscribe] = useState(false);
   const [contactInfo, setContactInfo] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -13,6 +14,11 @@ const Contactus = () => {
     e.preventDefault();
     setError('');
     setSuccess('');
+
+    if (!subscribe) {
+  setError("Please confirm you want to receive updates.");
+  return;
+}
 
     // Basic validation for email or phone number
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -25,7 +31,7 @@ const Contactus = () => {
 
     const { data, error } = await supabase
       .from('contact')
-      .insert([{ contact_info: contactInfo }]);
+      .insert([{ contact_info: contactInfo, subscribe }])
 
     if (error) {
       console.error('Error submitting form:', error.message);
@@ -51,25 +57,60 @@ const Contactus = () => {
       <p className="text-lg mb-6 text-gray-600">
         Stay updated with our latest services and opportunities.
       </p>
-      <form
-        className="flex justify-center items-center"
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="text"
-          placeholder="Phone Number or Your Email Address"
-          value={contactInfo}
-          onChange={(e) => setContactInfo(e.target.value)}
-          className="w-2/3 bg-input text-primary-foreground placeholder-primary-foreground border border-primary rounded-l-md px-4 py-2 focus:outline-none"
-          required
-        />
-        <button
-          type="submit"
-          className="bg-pink-600 hover:bg-pink-700 text-white rounded-r-md px-4 py-2 ml-2 transition"
-        >
-          Connect
-        </button>
-      </form>
+      <form onSubmit={handleSubmit} className="w-full flex flex-col items-center space-y-4">
+
+  <div className="flex w-full justify-center">
+    <input
+      type="text"
+      placeholder="Phone Number or Email Address"
+      value={contactInfo}
+      onChange={(e) => setContactInfo(e.target.value)}
+      className="w-2/3 bg-input text-primary-foreground placeholder-gray-500 border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+      required
+    />
+    
+    <button
+      type="submit"
+      disabled={!contactInfo || !subscribe}
+      className={`px-6 py-2 rounded-r-md ml-2 transition font-semibold ${
+        (!contactInfo || !subscribe) 
+          ? "bg-gray-400 cursor-not-allowed text-white" 
+          : "bg-pink-600 hover:bg-pink-700 text-white"
+      }`}
+    >
+      Connect
+    </button>
+  </div>
+
+  {/* Checkbox */}
+  <label className="flex items-start space-x-2 w-2/3 text-left cursor-pointer">
+    <input
+      type="checkbox"
+      checked={subscribe}
+      onChange={() => setSubscribe(!subscribe)}
+      className="mt-1 h-4 w-4 border border-gray-400 rounded-sm focus:ring-pink-500"
+    />
+    <span className="text-sm text-gray-600 leading-tight">
+      Sign up for our email list for updates, promotions, and more. 
+      You can unsubscribe at any time.
+    </span>
+  </label>
+
+  {/* Error */}
+  {error && (
+    <div className="w-2/3 bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-md text-sm">
+      {error}
+    </div>
+  )}
+
+  {/* Success */}
+  {success && (
+    <div className="w-2/3 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded-md text-sm">
+      ✅ Thank you! We’ll be in touch soon.
+    </div>
+  )}
+</form>
+
       {error && <p className="text-red-500 mt-4">{error}</p>}
       {success && <p className="text-green-500 mt-4">{success}</p>}
     </div>
