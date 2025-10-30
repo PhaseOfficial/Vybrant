@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaComments, FaPaperPlane, FaWhatsapp } from "react-icons/fa";
 import contextData from "./contextPrompts.json";
+import { supabase } from "../lib/supabaseClient";
+
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,15 +38,57 @@ const ChatBot = () => {
     const text = encodeURIComponent("Hello! I’d like to ask about your services.");
     window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
   };
+const saveLead = async ({ name, email, phone }) => {
+  const { error } = await supabase.from("contact_messages").insert([
+    {
+      name,
+      email,
+      phone,
+      message: "Submitted via AI assistant widget",
+      source: "chat_widget",
+      subscribe: true,
+    },
+  ]);
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  if (error) return error;
+
+  await fetch(
+    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({ name, email, phone }),
+    }
+  );
+
+  return null;
+};
+
+const handleFormSubmit = async (e) => {
+  e.preventDefault();
+
+  const error = await saveLead(formData);
+
+  if (error) {
     setMessages((prev) => [
       ...prev,
-      { sender: "ai", text: `✅ Thanks ${formData.name}! I’ve saved your info. Let’s continue.` },
+      { sender: "ai", text: "⚠️ Sorry, something went wrong saving your details." }
     ]);
-    setFormVisible(false);
-  };
+    return;
+  }
+
+  setMessages((prev) => [
+    ...prev,
+    { sender: "ai", text: `✅ Thanks ${formData.name}! Your details have been saved.` }
+  ]);
+
+  setFormVisible(false);
+  setFormData({ name: "", email: "", phone: "" });
+};
+
 
   const handleSend = async (e) => {
     e.preventDefault();
