@@ -220,7 +220,7 @@ const handleFormSubmit = async (e) => {
       {!isOpen && (
         <button
           onClick={toggleChat}
-          className="bg-pink-600 text-white p-4 rounded-full shadow-lg hover:bg-pink-700 transform hover:scale-105 transition-all"
+          className="bg-pink-600 text-white p-4 rounded-full shadow-lg hover:bg-pink-700 animate-bounce transform hover:scale-105 transition-all"
         >
           <FaComments size={20} />
         </button>

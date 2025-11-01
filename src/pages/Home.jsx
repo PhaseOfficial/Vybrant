@@ -9,7 +9,7 @@ import Offer from '../components/Offer';
 import Trust from '../components/Trust';
 import PartnersSection from '../components/PartnersSection';
 // import Carreer from '../components/Carreer';
-// import Testimonials from '../components/Testimonials';
+import Testimonials from '../components/Testimonials';
 
 export default function Home() {
     return (
@@ -19,8 +19,9 @@ export default function Home() {
             <HeroSection className=""/>
             <Offer className=""/>
             {/* <Explore className=""/> */}
-            {/* <Testimonials className="mt-20"/> */}
+            
             <Trust className=""/>
+            <Testimonials className="mt-20"/>
             {/* <Companies className=""/> */}
             {/* <Carreer className=""/> */}
             <PartnersSection />

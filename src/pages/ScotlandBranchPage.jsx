@@ -38,7 +38,7 @@ const ScotlandBranch = () => {
             Home Care Services for Scotland
           </h1>
           <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">
-            Supporting independence and wellbeing for individuals and families across West Lothian.
+            Supporting independence and wellbeing for individuals and families across West Lothian and surrounding areas.
           </p>
         </div>
       </section>

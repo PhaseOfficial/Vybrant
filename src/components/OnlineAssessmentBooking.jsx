@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import image3 from "../assets/booking.png"; // Replace with your actual image path
 import { addDays, format, isBefore, startOfDay } from "date-fns";
+import { supabase } from "../lib/supabaseClient";
+
 
 const OnlineAssessmentBooking = () => {
   const [step, setStep] = useState(1);
@@ -32,14 +34,51 @@ const OnlineAssessmentBooking = () => {
     ],
   };
 
-  const handleBook = async (e) => {
-    e.preventDefault();
-    alert("Booking confirmed! We'll contact you soon.");
-    setStep(1);
-    setSelectedDate(null);
-    setSelectedTime("");
-    setForm({ address1: "", address2: "", city: "", postal: "" });
-  };
+const handleBook = async (e) => {
+  e.preventDefault();
+
+  if (!selectedDate || !selectedTime) {
+    alert("Please select a date and time.");
+    return;
+  }
+
+const { full_name, email, phone, address1, address2, city, postal } = form;
+
+const { error } = await supabase
+  .from("online_assessments")
+  .insert([
+    {
+      full_name,
+      email,
+      phone,
+      address1,
+      address2,
+      city,
+      postal,
+      date: format(selectedDate, "yyyy-MM-dd"),
+      time: selectedTime,
+    },
+  ]);
+
+if (error) {
+  if (error.message.includes("unique_booking_slot")) {
+    alert("❗ This time slot is already booked. Please choose another.");
+  } else {
+    alert("Something went wrong. Try again.");
+  }
+  return;
+}
+
+
+  alert("Booking confirmed! We'll contact you soon ✅");
+
+  // Reset form + go back to first step
+  setStep(1);
+  setSelectedDate(null);
+  setSelectedTime("");
+  setForm({ address1: "", address2: "", city: "", postal: "" });
+};
+
 
   return (
     <div className="border-t border-b border-gray-400">
@@ -202,6 +241,31 @@ const OnlineAssessmentBooking = () => {
           </p>
 
           <div className="space-y-4 mb-6">
+          
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={form.full_name}
+              onChange={(e) => setForm({ ...form, full_name: e.target.value })}
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-2"
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-2"
+            />
+            <input
+              type="tel"
+              placeholder="Phone"
+              value={form.phone}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-2"
+            />
             <input
               type="text"
               placeholder="Address 1"

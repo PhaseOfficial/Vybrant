@@ -57,102 +57,104 @@ const About = () => {
       <Exploreprod />
 
       {/* Company Description */}
-      <section className="py-12">
-      <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      className="text-black p-6 rounded-lg shadow-lg my-8"
-    >
-      <div className="container mx-auto px-6 md:px-12 border border-pink-500 rounded-[3rem] py-12">
-          <div className="max-w-4xl mx-auto p-8 text-pink-500">
-          <h2 className="text-2xl font-bold text-center mb-8">What We Offer</h2>
-          <p className="text-center text-xl">
-          We offer a range of tailored home-care services designed to meet each client’s unique needs, 
-          ensuring a high standard of support and care. Our team is committed to delivering compassionate, 
-          professional assistance that promotes well-being and independence. </p>
-          <div className="mt-8 text-center">
-          <Link to="/Services">
-            <button
-            className="
-              relative overflow-hidden
-              rounded-full border-2 border-pink-600 text-pink-500 
-              px-6 py-3 mt-8 font-semibold
-              transition-all duration-300 ease-in-out
-              group
-            "
-          >
-            <span
-              className="
-                relative z-10 transition-colors duration-300 ease-in-out
-                group-hover:text-white
-              "
-            >
-              Find Out More
-            </span>
-            <span
-              className="
-                absolute inset-0 bg-blue-500 
-                translate-x-[-100%] 
-                group-hover:translate-x-0
-                transition-transform duration-300 ease-in-out
-                z-0
-              "
-            ></span>
-          </button>
-          
-          </Link>
-          </div>
-</div>
-<div className="max-w-4xl mx-auto p-8 text-blue-400">
-          <h2 className="text-2xl font-bold text-center mb-8">Our Staff, Our Strength</h2>
-          <p className="text-center text-xl">
-          Our team is our greatest asset. We are committed to recruiting, training, 
-          and supporting compassionate professionals who uphold the highest standards of care, 
-          always putting dignity, respect, 
-          and individual needs at the heart of everything they do.</p>
-          </div>
+      <section className="py-20 mt-10 mb-20 rounded-[3rem] bg-gray-100">
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8 }}
+    className="container mx-auto px-6 md:px-12"
+  >
 
-<div className="max-w-6xl mx-auto mt-16 px-4 md:px-8">
-  <h2 className="text-3xl font-bold text-center mb-8">
-    About Our Registered Manager
-  </h2>
-
-  <div className="flex flex-col md:flex-row items-center md:items-start gap-10">
-    {/* Text Section */}
-    <div className="flex-1 text-lg leading-relaxed text-center md:text-left">
-      <p>
-        Jean Sigauke is a committed General Nurse with a heartfelt passion for
-        making a positive difference in people’s lives. With over two decades of
-        experience at Sheffield Teaching Hospitals NHS Trust and Sheffield
-        Health and Social Care, she brings extensive knowledge in general
-        medicine, palliative care, and community-based support for individuals
-        with mental health needs and learning disabilities.
+    {/* What We Offer */}
+    <div className="text-center mb-16">
+      <h2 className="text-3xl font-bold text-pink-600">What We Offer</h2>
+      <p className="max-w-2xl mx-auto text-lg text-gray-600 mt-4">
+        We offer a range of tailored home-care services designed to support
+        independence, dignity, and well-being in the comfort of your home.
       </p>
-      <p className="mt-4">
-        In her previous role as a Registered General Nurse, Jean was known for
-        delivering compassionate, high-quality care, a standard she continues to
-        uphold at Vybrant Care Services. Her leadership cultivates a nurturing,
-        person-centred environment where her team feels empowered to support
-        each individual’s independence, dignity, and overall well-being.
+
+      <Link to="/Services">
+        <button className="group mt-8 relative overflow-hidden rounded-full border-2 border-pink-600 text-pink-500 px-8 py-3 font-semibold transition-all duration-300">
+          <span className="relative z-10 group-hover:text-white">Find Out More</span>
+          <span className="absolute inset-0 bg-blue-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></span>
+        </button>
+      </Link>
+    </div>
+
+    {/* Services Cards */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+      {/* Card 1 */}
+      <div className="bg-white border border-pink-200 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
+        <h3 className="text-xl font-bold text-pink-500 mb-3">Personalised Care Plans</h3>
+        <p className="text-gray-600">
+          Tailored support to meet individual needs, promoting independence and comfort.
+        </p>
+      </div>
+
+      {/* Card 2 */}
+      <div className="bg-white border border-pink-200 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
+        <h3 className="text-xl font-bold text-pink-500 mb-3">Professional Care Team</h3>
+        <p className="text-gray-600">
+          Highly trained and compassionate carers dedicated to delivering excellence.
+        </p>
+      </div>
+
+      {/* Card 3 */}
+      <div className="bg-white border border-pink-200 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
+        <h3 className="text-xl font-bold text-pink-500 mb-3">Flexible Support</h3>
+        <p className="text-gray-600">
+          From daily assistance to specialised support we adapt to your needs.
+        </p>
+      </div>
+    </div>
+
+    {/* Staff Strength */}
+    <div className="text-center mb-20">
+      <h2 className="text-3xl font-bold text-pink-600">Our Staff, Our Strength</h2>
+      <p className="max-w-2xl mx-auto text-lg text-gray-600 mt-4">
+        We invest in compassionate professionals who uphold dignity, respect, 
+        and exceptional care in every interaction.
       </p>
     </div>
 
-    {/* Image Section */}
-    <div className="flex-shrink-0 md:w-1/3 w-full flex justify-center">
-      <img
-        src={jeanImage} // replace with your actual image import or path
-        alt="Jean Sigauke - Registered Manager"
-        className="rounded-2xl shadow-lg w-64 h-64 object-cover md:w-80 md:h-80"
-      />
+    {/* Registered Manager Section */}
+    <div className="max-w-6xl mx-auto">
+      <h2 className="text-3xl font-bold text-center mb-12 text-pink-600">
+        About Our Registered Manager
+      </h2>
+
+      <div className="flex flex-col md:flex-row items-center gap-10">
+        
+        {/* Text */}
+        <div className="flex-1 text-gray-700 text-lg leading-relaxed">
+          <p>
+            Jean Sigauke is a committed General Nurse with over two decades of 
+            experience at Sheffield Teaching Hospitals NHS Trust and Sheffield 
+            Health and Social Care.
+          </p>
+          <p className="mt-4">
+            Known for delivering compassionate and high-quality care, she leads 
+            with a person-centred approach, empowering her team to support 
+            independence, dignity, and wellbeing.
+          </p>
+        </div>
+
+        {/* Image */}
+        <div className="flex-shrink-0">
+          <img
+            src={jeanImage}
+            alt="Jean Sigauke - Registered Manager"
+            className="rounded-2xl shadow-lg w-64 h-64 md:w-80 md:h-80 object-cover"
+          />
+        </div>
+
+      </div>
     </div>
-  </div>
-</div>
-</div>
-    </motion.div>
-      </section>
+  </motion.div>
+</section>
+
  
-    <section className="max-w-6xl mx-auto mt-20 mb-20 px-6 md:px-8 text-gray-800">
+    <section className="max-w-6xl mx-auto mb-20 px-6 md:px-8 text-gray-800">
       {/* Header */}
       <div className="text-center mb-12">
         <h2 className="text-4xl font-bold mb-4 text-gray-900">

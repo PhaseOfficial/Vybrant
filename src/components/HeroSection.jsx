@@ -11,14 +11,14 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="border-b border-gray-400 py-4 mb-10">
+    <section className="border-b border-gray-400  py-4 mb-10">
 
 
     <div className="py-24 px-6 text-center z-20 relative">
 <img
       src={image1}
       alt="Company Logo"
-      className="h-40 w-auto center mx-auto mb-6"
+      className="h-40 w-auto center  mx-auto mb-6"
     />
       <h1 className="text-4xl md:text-5xl font-montserrat font-black mb-6">
     We Are Making a Real Difference
@@ -47,7 +47,7 @@ export default function HeroSection() {
       group-hover:text-white
     "
   >
-    Work With Us
+    Our Services
   </span>
   <span
     className="

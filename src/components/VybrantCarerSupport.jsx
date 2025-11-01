@@ -104,7 +104,7 @@ const VybrantCarerSupport = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-4xl font-bold text-blue-800 mb-3"
+            className="text-3xl font-bold text-blue-800 mb-3"
           >
             Vybrant Carer Support & Respite Services
           </motion.h2>

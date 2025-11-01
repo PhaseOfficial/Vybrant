@@ -67,10 +67,10 @@ const Services = () => {
               <ServicesSection />
 
 <div className="max-w-3xl mx-auto text-center border-t border-gray-600 mb-16">
-<h2 className="text-2xl  font-bold mt-6 text-blue-700 mb-3">
+<h2 className="text-3xl  font-bold mt-6 text-blue-700 mb-3">
       Mental Health Support Services
       </h2>
-      <p className="text-lg font-medium text-pink-600 mb-6">
+      <p className="text-lg font-medium text-2xl text-pink-600 mb-6">
         Empowering Home-based Recovery
       </p>
 
