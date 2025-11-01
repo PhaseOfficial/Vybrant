@@ -135,6 +135,8 @@ const ServicesSection = () => {
               </div>
               <button
                 onClick={() => toggleService(index)}
+                data-track={`service_details_${openIndex === index ? 'close' : 'open'}`}
+                data-service={service.title.toLowerCase().replace(/\s+/g, '_')}
                 className="text-pink-500 hover:text-pink-600 text-xl p-2 rounded-full transition-all duration-200"
                 aria-label={openIndex === index ? "Close" : "Expand"}
               >

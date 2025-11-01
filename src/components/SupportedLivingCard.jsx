@@ -28,6 +28,7 @@ const SupportedLivingCard = () => {
 
         <Link to="/Supportedliving" target="_blank" rel="noopener noreferrer">
           <button
+            data-track="supported_living_cta_click"
             className="
               relative overflow-hidden
               rounded-full border-2 border-pink-600 

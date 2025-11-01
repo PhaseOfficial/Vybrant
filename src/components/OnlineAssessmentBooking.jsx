@@ -41,6 +41,14 @@ const handleBook = async (e) => {
     alert("Please select a date and time.");
     return;
   }
+  
+  // Track booking attempt
+  if (window.trackEvent) {
+    window.trackEvent('assessment_booking_submit', {
+      date: format(selectedDate, "yyyy-MM-dd"),
+      time: selectedTime
+    });
+  }
 
 const { full_name, email, phone, address1, address2, city, postal } = form;
 
@@ -82,7 +90,7 @@ if (error) {
 
   return (
     <div className="border-t border-b border-gray-400">
-    <section className="max-w-3xl  mx-auto mt-20 mb-20 px-6 text-gray-800">
+    <section className="max-w-3xl  mx-auto mt-20 mb-20 px-6 text-gray-800" data-track="assessment_booking_section">
       {/* STEP 1: Intro Card */}
       {step === 1 && (
         <motion.div

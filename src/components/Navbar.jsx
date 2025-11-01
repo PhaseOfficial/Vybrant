@@ -43,6 +43,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
+            data-track="mobile_menu_open"
             className="md:hidden flex items-center px-3 py-2 text-black hover:text-gray-500"
             onClick={() => setIsOpen(true)}
           >
@@ -56,6 +57,7 @@ export default function Navbar() {
         <div className="fixed inset-0 bg-white/90 backdrop-blur-md flex flex-col items-center justify-center space-y-8 text-black text-3xl font-montserrat z-50 transition-all duration-300">
           {/* Close Button */}
           <button
+            data-track="mobile_menu_close"
             className="absolute top-6 right-6 text-black hover:text-gray-500"
             onClick={() => setIsOpen(false)}
           >

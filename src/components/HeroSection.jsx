@@ -33,6 +33,7 @@ export default function HeroSection() {
 
 <Link to="/Services">
   <button
+  data-track="hero_services_button_click"
   className="
     relative overflow-hidden
     rounded-full border-2 border-pink-500 text-pink-500 

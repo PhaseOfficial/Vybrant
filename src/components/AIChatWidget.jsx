@@ -220,6 +220,7 @@ const handleFormSubmit = async (e) => {
       {!isOpen && (
         <button
           onClick={toggleChat}
+          data-track="chat_widget_open"
           className="bg-pink-600 text-white p-4 rounded-full shadow-lg hover:bg-pink-700 animate-bounce transform hover:scale-105 transition-all"
         >
           <FaComments size={20} />
@@ -231,7 +232,10 @@ const handleFormSubmit = async (e) => {
           {/* Header */}
           <div className="bg-pink-600 text-white flex justify-between items-center px-4 py-3">
             <h3 className="font-bold text-lg">Vybrant AI Assistant</h3>
-            <button onClick={toggleChat} className="text-2xl font-light hover:text-gray-100">
+            <button 
+              onClick={toggleChat} 
+              data-track="chat_widget_close"
+              className="text-2xl font-light hover:text-gray-100">
               &times;
             </button>
           </div>
@@ -258,6 +262,7 @@ const handleFormSubmit = async (e) => {
           {formVisible && (
             <form
               onSubmit={handleFormSubmit}
+              data-track="chat_contact_form_submit"
               className="fade-up bg-white border-t p-3 space-y-2 text-sm"
             >
             <p className="text-gray-700">Please provide your contact details:</p>
@@ -304,6 +309,7 @@ const handleFormSubmit = async (e) => {
               <button
                 type="submit"
                 disabled={!input.trim()}
+                data-track="chat_message_send"
                 className="ml-2 bg-pink-600 text-white p-2 rounded-full hover:bg-pink-700"
               >
                 <FaPaperPlane size={14} />
@@ -315,6 +321,7 @@ const handleFormSubmit = async (e) => {
           <div className="border-t bg-gray-50 flex justify-center items-center p-3">
             <button
               onClick={handleWhatsAppClick}
+              data-track="chat_whatsapp_redirect"
               className="flex items-center space-x-2 text-green-600 font-semibold hover:text-green-700"
             >
               <FaWhatsapp size={22} />

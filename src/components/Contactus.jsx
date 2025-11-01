@@ -57,7 +57,7 @@ const Contactus = () => {
       <p className="text-lg mb-6 text-gray-600">
         Stay updated with our latest services and opportunities.
       </p>
-      <form onSubmit={handleSubmit} className="w-full flex flex-col items-center space-y-4">
+      <form onSubmit={handleSubmit} data-track="newsletter_signup_form" className="w-full flex flex-col items-center space-y-4">
 
   <div className="flex w-full justify-center">
     <input
@@ -71,6 +71,7 @@ const Contactus = () => {
     
     <button
       type="submit"
+      data-track="newsletter_signup_submit"
       disabled={!contactInfo || !subscribe}
       className={`px-6 py-2 rounded-r-md ml-2 transition font-semibold ${
         (!contactInfo || !subscribe) 
@@ -88,6 +89,7 @@ const Contactus = () => {
       type="checkbox"
       checked={subscribe}
       onChange={() => setSubscribe(!subscribe)}
+      data-track="newsletter_signup_consent"
       className="mt-1 h-4 w-4 border border-gray-400 rounded-sm focus:ring-pink-500"
     />
     <span className="text-sm text-gray-600 leading-tight">
@@ -127,11 +129,11 @@ const Contactus = () => {
         </p>
         <p className="flex items-center mt-2 text-gray-600">
           <FaPhone className="mr-2" />
-          <a href="tel:01145511332" className="hover:underline">
+          <a href="tel:01145511332" data-track="contact_phone_yorkshire_landline" className="hover:underline">
             0114 551 1332
           </a>{" "}
           /{" "}
-          <a href="tel:07828402043" className="ml-1 hover:underline">
+          <a href="tel:07828402043" data-track="contact_phone_yorkshire_mobile" className="ml-1 hover:underline">
             07828 402 043
           </a>
         </p>
@@ -139,6 +141,7 @@ const Contactus = () => {
           <MdEmail className="mr-2" />
           <a
             href="mailto:info@vybrantcareservices.com"
+            data-track="contact_email_yorkshire"
             className="hover:underline"
           >
             info@vybrantcareservices.com
@@ -156,7 +159,7 @@ const Contactus = () => {
         </p>
         <p className="flex items-center mt-2 text-gray-600">
           <FaPhone className="mr-2" />
-          <a href="tel:07479251733" className="hover:underline">
+          <a href="tel:07479251733" data-track="contact_phone_east_riding" className="hover:underline">
             07479 251 733
           </a>
         </p>
@@ -164,6 +167,7 @@ const Contactus = () => {
           <MdEmail className="mr-2" />
           <a
             href="mailto:eastriding@vybrantcareservices.com"
+            data-track="contact_email_east_riding"
             className="hover:underline"
           >
             eastriding@vybrantcareservices.com
@@ -181,7 +185,7 @@ const Contactus = () => {
         </p>
         <p className="flex items-center mt-2 text-gray-600">
           <FaPhone className="mr-2" />
-          <a href="tel:07940136941" className="hover:underline">
+          <a href="tel:07940136941" data-track="contact_phone_scotland" className="hover:underline">
             07940 136 941
           </a>
         </p>
@@ -189,6 +193,7 @@ const Contactus = () => {
           <MdEmail className="mr-2" />
           <a
             href="mailto:info@vybrantcareservices.com"
+            data-track="contact_email_scotland"
             className="hover:underline"
           >
             info@vybrantcareservices.com

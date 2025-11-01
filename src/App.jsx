@@ -15,6 +15,14 @@ import OurFacilities from "./pages/our-facilities";
 import Mordenslavery from "./pages/Mordenslavery";
 import ScotlandWidget from "./components/ScotlandWidget";
 import ScotlandBranchPage from "./pages/ScotlandBranchPage";
+import { useEffect } from "react";
+import { trackVisit } from "./utils/trackVisit";
+import { setupAnalyticsListeners } from "./utils/analyticsListener";
+
+
+
+
+
 
 const tagManagerArgs = {
   gtmId: 'GTM-PKXK7LPV', // Replace with your GTM ID
@@ -23,7 +31,15 @@ const tagManagerArgs = {
 TagManager.initialize(tagManagerArgs);
 
 
+
 const App = () => {
+
+    useEffect(() => {
+    trackVisit();
+    setupAnalyticsListeners();
+  }, []);
+
+
   return (
     <div className="p-4">
 

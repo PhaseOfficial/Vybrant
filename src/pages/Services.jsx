@@ -158,6 +158,7 @@ const Services = () => {
             transition={{ duration: 0.5, delay: i * 0.1 }}
             viewport={{ once: true, amount: 0.3 }}
             className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300"
+            data-track={`mental_health_service_card_${item.title.toLowerCase().replace(/\s+/g, '_')}`}
           >
             <div className="flex items-center gap-4 mb-3">
               {item.icon}
@@ -199,7 +200,7 @@ const Services = () => {
 <OnlineAssessmentBooking />
 <VybrantCarerSupport />
 
-<section className="mx-auto mt-20 mb-20 bg-red-200 text-gray-800 py-16 px-6 md:px-12">
+    <section className="mx-auto mt-20 mb-20 bg-red-200 text-gray-800 py-16 px-6 md:px-12" data-track="emergency_care_section">
       <div className="flex flex-col md:flex-row items-center gap-12">
         {/* Left: Image */}
         <div className="flex-1">

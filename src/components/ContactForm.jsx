@@ -89,7 +89,7 @@ const ContactForm = () => {
       {error && <p className="text-red-500 text-center mb-2">{error}</p>}
       {success && <p className="text-green-500 text-center mb-2">{success}</p>}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-track="contact_form_submit">
         {/* Name */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-semibold mb-2">
