@@ -59,7 +59,16 @@ const Services = () => {
                 <img
                   src={image6}
                   alt="Young adults and caregivers in supported living environment"
-                  className="rounded-2xl shadow-2xl object-cover w-full h-[500px] hover:scale-[1.02] transition-all duration-300"
+                  className="
+  rounded-2xl shadow-2xl
+  object-contain
+  w-full 
+  h-auto
+  max-h-[500px]
+  hover:scale-[1.02]
+  transition-all duration-300
+"
+
                 />
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>

@@ -1,10 +1,10 @@
 import { supabase } from "../lib/supabaseClient";
-import { getVisitorId } from "./visitor";
+// import { getVisitorId } from "./visitor";
 import { hashString } from "./hash";
 
 export const trackVisit = async () => {
   try {
-    const visitor_id = getVisitorId();
+    // const visitor_id = getVisitorId();
 
     // Get IP
     const ip = await fetch("https://api.ipify.org?format=json")
@@ -20,7 +20,6 @@ export const trackVisit = async () => {
 
     // Save to Supabase
     await supabase.from("website_visits").insert({
-      visitor_id,
       ip_hash,
       user_agent: navigator.userAgent,
       page_url: window.location.href,

@@ -72,7 +72,11 @@ const ContactForm = () => {
 
   const handleWhatsAppClick = () => {
     const phoneNumber = "+447828402043"; // Replace with your WhatsApp number (no "+" sign)
-    const text = encodeURIComponent("Hello! I’d like to ask about your services.");
+    const text = encodeURIComponent("Hello! I'd like to ask about your services.");
+    // Track WhatsApp click before opening
+    if (window.trackEvent) {
+      window.trackEvent('whatsapp_contact_click');
+    }
     window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
   };
 
@@ -180,22 +184,30 @@ const ContactForm = () => {
         </div>
 
         {/* Submit + WhatsApp */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <button
-            type="submit"
-            className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all duration-300"
-          >
-            Submit
-          </button>
+        {/* Submit + WhatsApp */}
+<div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+  <button
+    type="submit"
+    className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all duration-300"
+  >
+    Submit
+  </button>
 
-          <button
-            type="button"
-            onClick={handleWhatsAppClick}
-            className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-green-400 transition-all duration-300"
-          >
-            <FaWhatsapp className="text-xl" /> Message us on WhatsApp
-          </button>
-        </div>
+  <button
+    type="button"
+    onClick={handleWhatsAppClick}
+    className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-green-400 transition-all duration-300"
+  >
+    <FaWhatsapp className="text-xl" /> Message us on WhatsApp
+  </button>
+</div>
+
+{/* Submission messages */}
+<div className="mt-4 text-center">
+  {error && <p className="text-red-500">{error}</p>}
+  {success && <p className="text-green-500">{success}</p>}
+</div>
+
       </form>
     </div>
   );

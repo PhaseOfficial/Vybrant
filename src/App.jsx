@@ -18,7 +18,8 @@ import ScotlandBranchPage from "./pages/ScotlandBranchPage";
 import { useEffect } from "react";
 import { trackVisit } from "./utils/trackVisit";
 import { setupAnalyticsListeners } from "./utils/analyticsListener";
-
+import { registerVisitor } from "./utils/registerVisitor";
+import AdminDashboard from "./pages/AdminDashboard";
 
 
 
@@ -36,6 +37,7 @@ const App = () => {
 
     useEffect(() => {
     trackVisit();
+    registerVisitor();
     setupAnalyticsListeners();
   }, []);
 
@@ -54,6 +56,7 @@ const App = () => {
         <Route path="/Our-Facilities" element={<OurFacilities />} />
         <Route path="/Mordenslavery" element={<Mordenslavery />} />
         <Route path="/scotland" element={<ScotlandBranchPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="*" element={<div className="text-center mt-20 text-2xl">404 - Page Not Found</div>} />
       </Routes>
       <AIChatWidget />
