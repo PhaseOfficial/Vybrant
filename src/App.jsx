@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -15,10 +14,12 @@ import OurFacilities from "./pages/our-facilities";
 import Mordenslavery from "./pages/Mordenslavery";
 import ScotlandWidget from "./components/ScotlandWidget";
 import ScotlandBranchPage from "./pages/ScotlandBranchPage";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { trackVisit } from "./utils/trackVisit";
 import { setupAnalyticsListeners } from "./utils/analyticsListener";
 import { registerVisitor } from "./utils/registerVisitor";
+import { supabase } from "./lib/supabaseClient";
+import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 
 
@@ -41,6 +42,22 @@ const App = () => {
     setupAnalyticsListeners();
   }, []);
 
+  const ProtectedRoute = ({ children }) => {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+
+  return session ? children : <AdminLogin />;
+};
+
 
   return (
     <div className="p-4">
@@ -56,7 +73,15 @@ const App = () => {
         <Route path="/Our-Facilities" element={<OurFacilities />} />
         <Route path="/Mordenslavery" element={<Mordenslavery />} />
         <Route path="/scotland" element={<ScotlandBranchPage />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route 
+  path="/admin"
+  element={
+    <ProtectedRoute>
+      <AdminDashboard />
+    </ProtectedRoute>
+  }
+/>
+
         <Route path="*" element={<div className="text-center mt-20 text-2xl">404 - Page Not Found</div>} />
       </Routes>
       <AIChatWidget />

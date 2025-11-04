@@ -1,6 +1,13 @@
 import React from "react";
 import { FaBars, FaChartBar, FaCalendarCheck, FaEnvelope } from "react-icons/fa";
 import Logo from "../assets/qt=q_95.webp"; // Import your logo here
+import { supabase } from "../lib/supabaseClient";
+
+const logout = async () => {
+  await supabase.auth.signOut();
+  window.location.href = "/";
+};
+
 
 const Sidebar = ({
   activeTab,
@@ -57,11 +64,15 @@ const Sidebar = ({
             </button>
           ))}
         </nav>
+        
+
 
         {/* Optional Footer */}
         {sidebarOpen && (
           <div className="mt-auto p-4 text-gray-400 text-xs text-center border-t border-gray-700">
-            © 2025 Vybrant Care Services
+           <button onClick={logout} className="bg-red-500 px-4 py-2 w-24 center text-white rounded">
+  Logout
+</button> 
           </div>
         )}
       </div>
