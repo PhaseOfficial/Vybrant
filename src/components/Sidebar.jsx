@@ -2,6 +2,7 @@ import React from "react";
 import { FaBars, FaChartBar, FaCalendarCheck, FaEnvelope } from "react-icons/fa";
 import Logo from "../assets/qt=q_95.webp"; // Import your logo here
 import { supabase } from "../lib/supabaseClient";
+import { FaAddressBook } from 'react-icons/fa';
 
 const logout = async () => {
   await supabase.auth.signOut();
@@ -18,6 +19,7 @@ const Sidebar = ({
     { name: "Website Data", icon: <FaChartBar /> },
     { name: "Bookings", icon: <FaCalendarCheck /> },
     { name: "Messages", icon: <FaEnvelope /> },
+    { name: "Contacts", icon: <FaAddressBook />}, 
   ],
 }) => {
   return (

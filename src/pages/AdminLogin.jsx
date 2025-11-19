@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
-import { useRef } from "react";
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 export default function AdminLogin() {
@@ -9,7 +8,6 @@ export default function AdminLogin() {
   const [error, setError] = useState("");
 
   const [captchaToken, setCaptchaToken] = useState()
-  const captcha = useRef()
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,7 +19,7 @@ export default function AdminLogin() {
     });
 
     if (error) setError(error.message);
-    else window.location.href = "#/admin";
+    else window.location.href = "/#/admin";
   };
 
   return (
@@ -39,7 +37,6 @@ export default function AdminLogin() {
 
         <button className="w-full bg-blue-600 text-white p-2 rounded">Login</button>
 <HCaptcha
-  ref={captcha}
   sitekey="adfe136e-23c2-4a10-a30a-7b5610dcc9ca"
   onVerify={(token) => {
     setCaptchaToken(token)

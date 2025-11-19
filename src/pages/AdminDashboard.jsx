@@ -3,12 +3,18 @@ import Sidebar from "../components/Sidebar";
 import WebData from "../components/WebData";
 import Bookings from "../components/Bookings";
 import Messages from "../components/Messages";
+import Contact from "../components/Contact";
+import { FaAddressBook } from 'react-icons/fa';
+import { FaEnvelope } from "react-icons/fa";
+import { FaCalendarCheck } from "react-icons/fa";
+import { FaChartBar } from "react-icons/fa";
 
 
 const TABS = [
-  { name: "Website Data", icon: "📊", component: WebData },
-  { name: "Bookings", icon: "📅", component: Bookings },
-  { name: "Messages", icon: "✉️", component: Messages },
+  { name: "Website Data", icon: <FaChartBar />, component: WebData },
+  { name: "Bookings", icon: <FaCalendarCheck />, component: Bookings },
+  { name: "Messages", icon: <FaEnvelope />, component: Messages },
+  { name: "Contacts", icon: <FaAddressBook />, component: Contact },
 ];
 
 const AdminDashboard = () => {
