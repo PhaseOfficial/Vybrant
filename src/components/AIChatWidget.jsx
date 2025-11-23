@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaComments, FaPaperPlane, FaWhatsapp } from "react-icons/fa";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import contextData from "./contextPrompts.json";
 import { supabase } from "../lib/supabaseClient";
-
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +21,9 @@ const ChatBot = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
 
   const messagesEndRef = useRef(null);
+  
+  // ✅ Initialize Google Generative AI
+  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
   // ✅ Save messages to localStorage on change
   useEffect(() => {
@@ -35,60 +38,60 @@ const ChatBot = () => {
 
   const handleWhatsAppClick = () => {
     const phoneNumber = "447828402043";
-    const text = encodeURIComponent("Hello! I’d like to ask about your services.");
+    const text = encodeURIComponent("Hello! I'd like to ask about your services.");
     window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
   };
-const saveLead = async ({ name, email, phone }) => {
-  const { error } = await supabase.from("contact_messages").insert([
-    {
-      name,
-      email,
-      phone,
-      message: "Submitted via AI assistant widget",
-      source: "chat_widget",
-      subscribe: true,
-    },
-  ]);
 
-  if (error) return error;
-
-  await fetch(
-    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+  const saveLead = async ({ name, email, phone }) => {
+    const { error } = await supabase.from("contact_messages").insert([
+      {
+        name,
+        email,
+        phone,
+        message: "Submitted via AI assistant widget",
+        source: "chat_widget",
+        subscribe: true,
       },
-      body: JSON.stringify({ name, email, phone }),
+    ]);
+
+    if (error) return error;
+
+    await fetch(
+      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ name, email, phone }),
+      }
+    );
+
+    return null;
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    const error = await saveLead(formData);
+
+    if (error) {
+      setMessages((prev) => [
+        ...prev,
+        { sender: "ai", text: "⚠️ Sorry, something went wrong saving your details." }
+      ]);
+      return;
     }
-  );
 
-  return null;
-};
-
-const handleFormSubmit = async (e) => {
-  e.preventDefault();
-
-  const error = await saveLead(formData);
-
-  if (error) {
     setMessages((prev) => [
       ...prev,
-      { sender: "ai", text: "⚠️ Sorry, something went wrong saving your details." }
+      { sender: "ai", text: `✅ Thanks ${formData.name}! Your details have been saved.` }
     ]);
-    return;
-  }
 
-  setMessages((prev) => [
-    ...prev,
-    { sender: "ai", text: `✅ Thanks ${formData.name}! Your details have been saved.` }
-  ]);
-
-  setFormVisible(false);
-  setFormData({ name: "", email: "", phone: "" });
-};
-
+    setFormVisible(false);
+    setFormData({ name: "", email: "", phone: "" });
+  };
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -157,33 +160,30 @@ const handleFormSubmit = async (e) => {
     }
 
     try {
-      const prompt = `${contextData.prompt}\n\n${updatedMessages
+      // ✅ Build conversation history for context
+      const conversationHistory = updatedMessages
         .map((m) => `${m.sender === "user" ? "User" : "Assistant"}: ${m.text}`)
-        .join("\n")}\nAssistant:`;
+        .join("\n");
+      
+      const fullPrompt = `${contextData.prompt}\n\n${conversationHistory}\nAssistant:`;
 
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-      const payload = { contents: [{ parts: [{ text: prompt }] }] };
-
-      const res = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+      // ✅ Use the Generative AI library
+      const model = genAI.getGenerativeModel({ 
+        model: "gemini-2.5-flash" 
       });
 
-      const data = await res.json();
-      const aiReply =
-        data.candidates?.[0]?.content?.parts?.[0]?.text ||
-        "I'm here to assist you further!";
+      const result = await model.generateContent(fullPrompt);
+      const response = await result.response;
+      const aiReply = response.text() || "I'm here to assist you further!";
+      
       setMessages((prev) => [...prev, { sender: "ai", text: aiReply }]);
     } catch (error) {
-      console.error(error);
+      console.error("AI Error:", error);
       setMessages((prev) => [
         ...prev,
         {
           sender: "ai",
-          text:
-            "Sorry, I’m having trouble connecting right now. Please try again later or use our WhatsApp contact below.",
+          text: "Sorry, I'm having trouble connecting right now. Please try again later or use our WhatsApp contact below.",
         },
       ]);
     } finally {

@@ -11,24 +11,23 @@ if (!API_KEY) {
   );
 }
 
-const ai = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;
+const genAI = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;
 
 /* -------------------------------------------------------------------------- */
 /*                          Generate Blog Content                             */
 /* -------------------------------------------------------------------------- */
 export const generateBlogContent = async (prompt) => {
-  if (!ai) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
+  if (!genAI) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
   try {
-    const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" });
-
-    const response = await model.generateContent({
-      contents: [{ text: `Write a blog post about: ${prompt}. Make it engaging and well-structured.` }],
-    });
-
-    return await response.response.text();
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const result = await model.generateContent(
+      `Write a blog post about: ${prompt}. Make it engaging and well-structured.`
+    );
+    const response = await result.response;
+    return response.text();
   } catch (error) {
     console.error("Error generating blog content:", error);
-    throw new Error("Failed to generate blog content.");
+    throw new Error(`Failed to generate blog content: ${error.message}`);
   }
 };
 
@@ -36,73 +35,123 @@ export const generateBlogContent = async (prompt) => {
 /*                       Generate Trending Blog Titles                        */
 /* -------------------------------------------------------------------------- */
 export const generateTrendingTitles = async (topic) => {
-  if (!ai) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
-  try {
-    const model = ai.getGenerativeModel({
-      model: "gemini-2.5-flash",
-      tools: [{ googleSearch: {} }],
-    });
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
-    const response = await model.generateContent({
-      contents: [
-        {
-          text: `Find current trending topics and news regarding "${topic}". Based on these trends, generate 5 engaging and distinct blog post titles. Return only the titles, one per line, without numbering or bullets.`,
-        },
-      ],
-    });
+  // 1) Prefer SDK client if available
+  if (genAI) {
+    try {
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+      const result = await model.generateContent(
+        `Generate 5 engaging and distinct blog post titles about "${topic}". Return only the titles, one per line, without numbering or bullets. Make them catchy and relevant to current trends.`
+      );
+      const response = await result.response;
+      const text = response?.text() || "";
 
-    const text = await response.response.text();
+      const titles = text
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => line.replace(/^(\d+\.|-|\*)\s*/, "").replace(/^"|"$/g, ""))
+        .slice(0, 5);
 
-    const titles = text
-      .split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean)
-      .map((line) => line.replace(/^(\d+\.|-|\*)\s*/, "").replace(/^"|"$/g, ""));
-
-    const metadata = response.response.candidates?.[0]?.groundingMetadata;
-
-    const sources =
-      metadata?.groundingChunks
-        ?.map((c) => c?.web || null)
-        ?.filter(Boolean) || [];
-
-    return { titles, sources };
-  } catch (error) {
-    console.error("Error generating trending titles:", error);
-    throw new Error("Failed to generate trending titles.");
+      return { titles, sources: [] };
+    } catch (err) {
+      console.error("Error generating trending titles with SDK:", err);
+      // fall through to REST fallback
+    }
   }
+
+  // 2) REST fallback using the VITE API key, if present
+  if (apiKey) {
+    try {
+      const prompt = `Find current trending topics and news regarding "${topic}". Based on these trends, generate 5 engaging and distinct blog post titles. Return only the titles, one per line, without numbering or bullets.`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+      const payload = { contents: [{ text: prompt }] };
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || data?.text || "";
+
+      const titles = text
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => line.replace(/^(\d+\.|-|\*)\s*/, "").replace(/^"|"$/g, ""))
+        .slice(0, 5);
+
+      const sources =
+        data?.candidates?.[0]?.groundingMetadata?.groundingChunks
+          ?.map((c) => c?.web || null)
+          ?.filter(Boolean) || [];
+
+      return { titles, sources };
+    } catch (err) {
+      console.error("Error generating trending titles via REST:", err);
+      // fall through
+    }
+  }
+
+  // 3) No key available — return helpful stub titles so UI remains usable
+  console.warn("generateTrendingTitles: Gemini API not available, returning stub titles.");
+  return {
+    titles: [
+      `Example: ${topic} — Why it matters now`,
+      `${topic}: Key trends to watch`,
+      `How ${topic} is changing care work`,
+      `Practical tips for ${topic}`,
+      `Future of ${topic}: What to expect`,
+    ],
+    sources: [],
+  };
 };
 
 /* -------------------------------------------------------------------------- */
 /*                              Generate Image                                */
 /* -------------------------------------------------------------------------- */
 export const generateImage = async (prompt) => {
-  if (!ai) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
-  try {
-    const model = ai.getGenerativeModel({ model: "gemini-2.5-flash-image" });
+  // Try REST call to Gemini image model using VITE_GEMINI_API_KEY.
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
-    const response = await model.generateContent({
+  if (!apiKey) {
+    console.warn("generateImage: VITE_GEMINI_API_KEY not set — cannot generate images.");
+    return null;
+  }
+
+  try {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${apiKey}`;
+    const payload = {
       contents: [{ text: prompt }],
-      generationConfig: {
-        responseModalities: ["IMAGE"],
-      },
+      generationConfig: { responseModalities: ["IMAGE"] },
+    };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
 
-    const parts = response.response.candidates?.[0]?.content?.parts || [];
+    const data = await res.json();
 
+    const parts = data?.candidates?.[0]?.content?.parts || [];
     const imagePart = parts.find((p) => p.inlineData);
 
     if (imagePart) {
-      return {
-        base64: imagePart.inlineData.data,
-        mimeType: imagePart.inlineData.mimeType,
-      };
+      return { base64: imagePart.inlineData.data, mimeType: imagePart.inlineData.mimeType };
     }
 
-    throw new Error("No image was generated.");
+    // Some responses may return a textual description — return that as fallback
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || data?.text || null;
+    if (text) return { text };
+
+    throw new Error("No image data returned from Gemini image model");
   } catch (error) {
-    console.error("Error generating image:", error);
-    throw new Error("Failed to generate image.");
+    console.error("Error generating image via Gemini REST:", error);
+    return null;
   }
 };
 
@@ -110,40 +159,44 @@ export const generateImage = async (prompt) => {
 /*                                Edit Image                                  */
 /* -------------------------------------------------------------------------- */
 export const editImage = async (base64Image, mimeType, prompt) => {
-  if (!ai) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
-  try {
-    const model = ai.getGenerativeModel({ model: "gemini-2.5-flash-image" });
+  // Use REST endpoint for image editing to keep client-side usage simple.
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (!apiKey) {
+    console.warn("editImage: VITE_GEMINI_API_KEY not set — cannot edit images.");
+    return null;
+  }
 
-    const response = await model.generateContent({
+  try {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${apiKey}`;
+    const payload = {
       contents: [
-        {
-          inlineData: {
-            data: base64Image,
-            mimeType,
-          },
-        },
+        { inlineData: { data: base64Image, mimeType } },
         { text: prompt },
       ],
-      generationConfig: {
-        responseModalities: ["IMAGE"],
-      },
+      generationConfig: { responseModalities: ["IMAGE"] },
+    };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
 
-    const parts = response.response.candidates?.[0]?.content?.parts || [];
-
+    const data = await res.json();
+    const parts = data?.candidates?.[0]?.content?.parts || [];
     const imagePart = parts.find((p) => p.inlineData);
 
     if (imagePart) {
-      return {
-        base64: imagePart.inlineData.data,
-        mimeType: imagePart.inlineData.mimeType,
-      };
+      return { base64: imagePart.inlineData.data, mimeType: imagePart.inlineData.mimeType };
     }
 
-    throw new Error("Image editing did not return an image.");
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || data?.text || null;
+    if (text) return { text };
+
+    throw new Error("No image data returned from Gemini image edit model");
   } catch (error) {
-    console.error("Error editing image:", error);
-    throw new Error("Failed to edit image.");
+    console.error("Error editing image via Gemini REST:", error);
+    return null;
   }
 };
 
@@ -156,36 +209,40 @@ export const analyzeSeo = async (blogTitle, blogContent) => {
   }
 
   try {
-    if (!ai) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
-    const model = ai.getGenerativeModel({
-      model: "gemini-2.5-pro",
-      generationConfig: {
-        responseMimeType: "application/json",
-      },
-    });
+    if (!genAI) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    const response = await model.generateContent({
-      contents: [
-        {
-          text: `As an SEO expert, analyze the following blog post.
+    const result = await model.generateContent(
+      `As an SEO expert, analyze the following blog post and return ONLY a JSON object without any markdown formatting.
 
 Title: ${blogTitle}
 
 Content:
-${blogContent}
+${blogContent.substring(0, 10000)} // Limit content length
 
-Return valid JSON with:
-- keywords (5–7 terms)
-- metaTitle (< 60 chars)
-- metaDescription (< 160 chars)`,
-        },
-      ],
-    });
+Return this exact JSON structure:
+{
+  "keywords": ["array", "of", "5-7", "relevant", "keywords"],
+  "metaTitle": "SEO title under 60 characters",
+  "metaDescription": "SEO description under 160 characters"
+}`
+    );
 
-    return JSON.parse(await response.response.text());
+    const response = await result.response;
+    const text = response.text();
+    
+    // Clean the response - remove any markdown code blocks
+    const cleanText = text.replace(/```json\n?|\n?```/g, '').trim();
+    
+    return JSON.parse(cleanText);
   } catch (error) {
     console.error("Error analyzing SEO:", error);
-    throw new Error("Failed to analyze SEO for the content.");
+    // Return fallback SEO data instead of throwing
+    return {
+      keywords: blogContent.split(/\s+/).slice(0, 5),
+      metaTitle: blogTitle.substring(0, 60),
+      metaDescription: blogContent.substring(0, 160)
+    };
   }
 };
 
@@ -196,21 +253,17 @@ export const fixGrammar = async (text) => {
   if (!text.trim()) return text;
 
   try {
-    if (!ai) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
-    const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" });
+    if (!genAI) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    const response = await model.generateContent({
-      contents: [
-        {
-          text: `You are a professional editor. Correct the grammar and spelling of the following text. Maintain tone and meaning. Return only the corrected text:\n\n${text}`,
-        },
-      ],
-    });
-
-    return await response.response.text();
+    const result = await model.generateContent(
+      `You are a professional editor. Correct the grammar and spelling of the following text. Maintain tone and meaning. Return only the corrected text:\n\n${text}`
+    );
+    const response = await result.response;
+    return response.text();
   } catch (error) {
     console.error("Error fixing grammar:", error);
-    throw new Error("Failed to fix grammar.");
+    throw new Error(`Failed to fix grammar: ${error.message}`);
   }
 };
 
@@ -221,29 +274,61 @@ export const suggestImagePrompts = async (blogContent) => {
   if (!blogContent.trim()) return [];
 
   try {
-    if (!ai) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
-    const model = ai.getGenerativeModel({
-      model: "gemini-2.5-flash",
-      generationConfig: {
-        responseMimeType: "application/json",
-      },
-    });
+    if (!genAI) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    const response = await model.generateContent({
-      contents: [
-        {
-          text: `Analyze the following blog post and generate 3 descriptive image prompts for headers or illustrations. Return JSON array only.\n\n${blogContent.slice(
-            0,
-            15000
-          )}`,
-        },
-      ],
-    });
+    const result = await model.generateContent(
+      `Analyze the following blog content and generate 3 descriptive image prompts for headers or illustrations. Return ONLY a JSON array of strings without any additional text or markdown formatting.
 
-    return JSON.parse(await response.response.text());
+Content:
+${blogContent.substring(0, 8000)}
+
+Return format: ["prompt 1", "prompt 2", "prompt 3"]`
+    );
+
+    const response = await result.response;
+    const text = response.text();
+    
+    // Clean the response
+    const cleanText = text.replace(/```json\n?|\n?```/g, '').trim();
+    
+    return JSON.parse(cleanText);
   } catch (error) {
     console.error("Error suggesting image prompts:", error);
-    return [];
+    // Return fallback prompts
+    return [
+      "A visually engaging header image related to the blog topic",
+      "An illustrative graphic that represents the main concepts",
+      "A background image that complements the content theme"
+    ];
+  }
+};
+
+/* -------------------------------------------------------------------------- */
+/*                    Generate Content with Web Search                        */
+/* -------------------------------------------------------------------------- */
+export const generateContentWithSearch = async (prompt) => {
+  if (!genAI) throw new Error("Gemini API key not configured (VITE_GEMINI_API_KEY).");
+  try {
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-2.5-flash",
+      tools: [{
+        googleSearchRetrieval: {},
+      }]
+    });
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    
+    // Note: The @google/generative-ai SDK handles grounding differently
+    // You might need to adjust this based on the actual response structure
+    return {
+      text: response.text(),
+      sources: response.candidates?.[0]?.groundingMetadata?.groundingChunks || []
+    };
+  } catch (error) {
+    console.error("Error generating content with search:", error);
+    throw new Error(`Failed to generate content with search: ${error.message}`);
   }
 };
 
@@ -262,6 +347,24 @@ export const saveBlogPost = async (blogData) => {
     return data;
   } catch (error) {
     console.error("Error saving blog post:", error);
-    throw new Error("Failed to save blog post");
+    throw new Error(`Failed to save blog post: ${error.message}`);
+  }
+};
+
+/* -------------------------------------------------------------------------- */
+/*                          Get Blog Posts (Supabase)                         */
+/* -------------------------------------------------------------------------- */
+export const getBlogPosts = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error("Error fetching blog posts:", error);
+    throw new Error(`Failed to fetch blog posts: ${error.message}`);
   }
 };

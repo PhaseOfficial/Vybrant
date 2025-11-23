@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { editImage } from '../services/geminiService';
-import Spinner from './Spinner';
-import Modal from './Modal';
+import { editImage } from '../services/geminiService.js';
+import Spinner from './Spinner.jsx';
+import Modal from './Modal.jsx';
 
 const ImageEditor = ({ image, onClose, onImageEdited }) => {
   const [prompt, setPrompt] = useState('');
@@ -14,10 +14,26 @@ const ImageEditor = ({ image, onClose, onImageEdited }) => {
     setError(null);
     try {
       const base64Data = image.src.split(',')[1];
-      const { base64: newBase64, mimeType: newMimeType } = await editImage(base64Data, image.mimeType, prompt);
-      onImageEdited(image.id, `data:${newMimeType};base64,${newBase64}`, newMimeType);
+      const res = await editImage(base64Data, image.mimeType, prompt);
+      if (!res) {
+        setError('Failed to edit image. No response from the image service.');
+        setIsLoading(false);
+        return;
+      }
+      if (res.base64 && res.mimeType) {
+        onImageEdited(image.id, `data:${res.mimeType};base64,${res.base64}`, res.mimeType);
+      } else if (res.text) {
+        setError('Image edit returned a text response: ' + res.text);
+        setIsLoading(false);
+        return;
+      } else {
+        setError('Image edit returned an unexpected response.');
+        setIsLoading(false);
+        return;
+      }
       onClose();
-    } catch (err) {
+    } catch (error) {
+      console.error('Error editing image:', error);
       setError('Failed to edit image. Please try again.');
     } finally {
       setIsLoading(false);

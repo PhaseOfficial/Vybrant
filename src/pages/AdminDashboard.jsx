@@ -10,6 +10,8 @@ import { FaCalendarCheck } from "react-icons/fa";
 import { FaChartBar } from "react-icons/fa";
 import { FaBlog } from "react-icons/fa";
 import BlogApp from "./BlogApp";
+import { FaFileAlt } from "react-icons/fa";
+import BlogPage from "./BlogPage";
 
 
 const TABS = [
@@ -18,6 +20,7 @@ const TABS = [
   { name: "Messages", icon: <FaEnvelope />, component: Messages },
   { name: "Contacts", icon: <FaAddressBook />, component: Contact },
   { name: "Blog Assistant", icon: <FaBlog />, component: BlogApp },
+  { name: "Blog Management", icon: <FaFileAlt />, component: BlogPage },
 ];
 
 const AdminDashboard = () => {

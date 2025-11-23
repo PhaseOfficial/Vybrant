@@ -4,6 +4,7 @@ import Logo from "../assets/qt=q_95.webp"; // Import your logo here
 import { supabase } from "../lib/supabaseClient";
 import { FaAddressBook } from 'react-icons/fa';
 import { FaBlog } from "react-icons/fa";
+import { FaFileAlt } from "react-icons/fa";
 
 const logout = async () => {
   await supabase.auth.signOut();
@@ -22,6 +23,7 @@ const Sidebar = ({
     { name: "Messages", icon: <FaEnvelope /> },
     { name: "Contacts", icon: <FaAddressBook />}, 
     { name: "Blog Assistant", icon: <FaBlog /> },
+    { name: "Blog Management", icon: <FaFileAlt /> }, 
 
   ],
 }) => {

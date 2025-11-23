@@ -65,57 +65,6 @@ const About = () => {
     className="container mx-auto px-6 md:px-12"
   >
 
-    {/* What We Offer */}
-    <div className="text-center mb-16">
-      <h2 className="text-3xl font-bold text-pink-600">What We Offer</h2>
-      <p className="max-w-2xl mx-auto text-lg text-gray-600 mt-4">
-        We offer a range of tailored home-care services designed to support
-        independence, dignity, and well-being in the comfort of your home.
-      </p>
-
-      <Link to="/Services">
-        <button className="group mt-8 relative overflow-hidden rounded-full border-2 border-pink-600 text-pink-500 px-8 py-3 font-semibold transition-all duration-300">
-          <span className="relative z-10 group-hover:text-white">Find Out More</span>
-          <span className="absolute inset-0 bg-blue-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></span>
-        </button>
-      </Link>
-    </div>
-
-    {/* Services Cards */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-      {/* Card 1 */}
-      <div className="bg-white border border-pink-200 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
-        <h3 className="text-xl font-bold text-pink-500 mb-3">Personalised Care Plans</h3>
-        <p className="text-gray-600">
-          Tailored support to meet individual needs, promoting independence and comfort.
-        </p>
-      </div>
-
-      {/* Card 2 */}
-      <div className="bg-white border border-pink-200 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
-        <h3 className="text-xl font-bold text-pink-500 mb-3">Professional Care Team</h3>
-        <p className="text-gray-600">
-          Highly trained and compassionate carers dedicated to delivering excellence.
-        </p>
-      </div>
-
-      {/* Card 3 */}
-      <div className="bg-white border border-pink-200 shadow-lg rounded-2xl p-8 hover:shadow-xl transition">
-        <h3 className="text-xl font-bold text-pink-500 mb-3">Flexible Support</h3>
-        <p className="text-gray-600">
-          From daily assistance to specialised support we adapt to your needs.
-        </p>
-      </div>
-    </div>
-
-    {/* Staff Strength */}
-    <div className="text-center mb-20">
-      <h2 className="text-3xl font-bold text-pink-600">Our Staff, Our Strength</h2>
-      <p className="max-w-2xl mx-auto text-lg text-gray-600 mt-4">
-        We invest in compassionate professionals who uphold dignity, respect, 
-        and exceptional care in every interaction.
-      </p>
-    </div>
 
     {/* Registered Manager Section */}
     <div className="max-w-6xl mx-auto">

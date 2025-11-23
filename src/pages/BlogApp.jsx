@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { generateBlogContent, generateImage, analyzeSeo, fixGrammar, generateTrendingTitles, suggestImagePrompts, editImage } from '../services/geminiService';
+import { generateBlogContent, generateImage, analyzeSeo, fixGrammar, generateTrendingTitles, suggestImagePrompts, editImage, saveBlogPost } from '../services/geminiService';
+import { supabase } from '../lib/supabaseClient';
 import ImageEditor from '../components/ImageEditor';
 import Spinner from '../components/Spinner';
 import SeoSuggestions from '../components/SeoSuggestions';
@@ -20,6 +21,7 @@ const Header = () => (
 );
 
 const imageStyles = ['Photorealistic', 'Cartoon', 'Watercolor', 'Abstract', 'Minimalist', 'Retro', 'Cyberpunk', 'Fantasy'];
+const imagePositions = ['Top', 'Center', 'Bottom', 'Left', 'Right', 'Full Width'];
 
 const BlogApp = () => {
   const [blogTitle, setBlogTitle] = useState('My Awesome AI-Generated Blog Post');
@@ -29,16 +31,19 @@ const BlogApp = () => {
   const [contentPrompt, setContentPrompt] = useState('');
   const [imagePrompt, setImagePrompt] = useState('');
   const [selectedImageStyle, setSelectedImageStyle] = useState(null);
+  const [selectedImagePosition, setSelectedImagePosition] = useState('Top');
   
   const [isGeneratingContent, setIsGeneratingContent] = useState(false);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [isAnalyzingSeo, setIsAnalyzingSeo] = useState(false);
   const [isFixingGrammar, setIsFixingGrammar] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const [seoAnalysis, setSeoAnalysis] = useState(null);
   const [plannedPosts, setPlannedPosts] = useState([]);
   
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   
   const [editingImage, setEditingImage] = useState(null);
 
@@ -47,6 +52,7 @@ const BlogApp = () => {
     setIsGeneratingContent(true);
     setSeoAnalysis(null);
     setError(null);
+    setSuccess(null);
     try {
       const content = await generateBlogContent(contentPrompt);
       setBlogContent(content);
@@ -61,6 +67,7 @@ const BlogApp = () => {
     if (!blogContent) return;
     setIsAnalyzingSeo(true);
     setError(null);
+    setSuccess(null);
     try {
       const analysis = await analyzeSeo(blogTitle, blogContent);
       setSeoAnalysis(analysis);
@@ -75,9 +82,11 @@ const BlogApp = () => {
     if (!blogContent) return;
     setIsFixingGrammar(true);
     setError(null);
+    setSuccess(null);
     try {
       const fixed = await fixGrammar(blogContent);
       setBlogContent(fixed);
+      setSuccess('Grammar and spelling fixed successfully!');
     } catch (err) {
       setError("Failed to fix grammar.");
     } finally {
@@ -89,24 +98,107 @@ const BlogApp = () => {
     if (!imagePrompt) return;
     setIsGeneratingImage(true);
     setError(null);
+    setSuccess(null);
     try {
       const finalPrompt = selectedImageStyle
         ? `${imagePrompt}, in a ${selectedImageStyle.toLowerCase()} style`
         : imagePrompt;
 
-      const { base64, mimeType } = await generateImage(finalPrompt);
-      const newImage = {
-        id: new Date().toISOString(),
-        src: `data:${mimeType};base64,${base64}`,
-        prompt: imagePrompt,
-        mimeType,
-      };
-      setImages(prev => [...prev, newImage]);
-      setImagePrompt('');
+      const result = await generateImage(finalPrompt);
+      
+      if (result && result.base64) {
+        const newImage = {
+          id: new Date().toISOString(),
+          src: `data:${result.mimeType};base64,${result.base64}`,
+          prompt: imagePrompt,
+          mimeType: result.mimeType,
+          position: selectedImagePosition,
+          base64: result.base64
+        };
+        setImages(prev => [...prev, newImage]);
+        setImagePrompt('');
+        setSuccess('AI image generated successfully!');
+      } else if (result && result.text) {
+        setError(`Image generation returned text: ${result.text}`);
+      } else {
+        setError('Failed to generate image. Please try again.');
+      }
     } catch (err) {
       setError('Failed to generate image. Please try again.');
     } finally {
       setIsGeneratingImage(false);
+    }
+  };
+
+  const handleUploadImage = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Check if file is an image
+    if (!file.type.startsWith('image/')) {
+      setError('Please select a valid image file');
+      return;
+    }
+
+    // Check file size (limit to 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Image size must be less than 5MB');
+      return;
+    }
+
+    setError(null);
+    setSuccess(null);
+
+    try {
+      // Convert file to base64 for preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const base64 = e.target.result.split(',')[1];
+        const newImage = {
+          id: new Date().toISOString(),
+          src: e.target.result,
+          prompt: `Uploaded: ${file.name}`,
+          mimeType: file.type,
+          position: selectedImagePosition,
+          base64: base64,
+          fileName: file.name,
+          isUploaded: true,
+          file: file
+        };
+        setImages(prev => [...prev, newImage]);
+        setSuccess(`Image "${file.name}" uploaded successfully!`);
+        
+        // Reset file input
+        event.target.value = '';
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      setError('Failed to upload image. Please try again.');
+    }
+  };
+
+  const handleUploadToStorage = async (file) => {
+    try {
+      const fileName = `blog-images/${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+      
+      const { data, error } = await supabase.storage
+        .from('blog-images')
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
+
+      if (error) throw error;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('blog-images')
+        .getPublicUrl(fileName);
+
+      return publicUrl;
+    } catch (error) {
+      console.error('Error uploading to storage:', error);
+      throw error;
     }
   };
 
@@ -116,24 +208,37 @@ const BlogApp = () => {
         img.id === imageId ? { ...img, src: newSrc, mimeType: newMimeType } : img
       )
     );
+    setSuccess('Image edited successfully!');
   }, []);
 
   const deleteImage = (id) => {
     setImages(prev => prev.filter(img => img.id !== id));
+    setSuccess('Image deleted successfully!');
+  };
+
+  const updateImagePosition = (imageId, position) => {
+    setImages(prevImages =>
+      prevImages.map(img =>
+        img.id === imageId ? { ...img, position } : img
+      )
+    );
   };
   
   const addPlannedPost = (post) => {
     const newPost = { ...post, id: new Date().toISOString() };
     setPlannedPosts(prev => [...prev, newPost]);
+    setSuccess('Post added to content planner!');
   };
 
   const deletePlannedPost = (id) => {
     setPlannedPosts(prev => prev.filter(p => p.id !== id));
+    setSuccess('Post removed from content planner!');
   };
   
   const startGenerationFromPlan = (topic) => {
     setContentPrompt(topic);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setSuccess(`Started generating content for: ${topic}`);
   };
 
   const handleTitleSelection = (title) => {
@@ -141,12 +246,131 @@ const BlogApp = () => {
     setContentPrompt(title);
   };
 
+  const handleSaveBlogPost = async () => {
+    if (!blogTitle.trim() || !blogContent.trim()) {
+      setError('Please provide both a title and content before saving.');
+      return;
+    }
+
+    setIsSaving(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const uploadedImageUrls = [];
+      
+      for (const image of images) {
+        let imageUrl;
+        
+        if (image.isUploaded && image.file) {
+          // Handle file uploads
+          imageUrl = await handleUploadToStorage(image.file);
+        } else if (image.base64) {
+          // Handle base64 images (AI-generated)
+          try {
+            const response = await fetch(image.src);
+            const blob = await response.blob();
+            const fileName = `blog-images/${Date.now()}-${Math.random().toString(36).substring(7)}.${image.mimeType.split('/')[1] || 'jpg'}`;
+            
+            const { data, error } = await supabase.storage
+              .from('blog-images')
+              .upload(fileName, blob, {
+                contentType: image.mimeType,
+                upsert: false
+              });
+
+            if (error) throw error;
+
+            const { data: { publicUrl } } = supabase.storage
+              .from('blog-images')
+              .getPublicUrl(fileName);
+
+            imageUrl = publicUrl;
+          } catch (uploadError) {
+            console.error('Error uploading AI image:', uploadError);
+            continue; // Skip this image but continue with others
+          }
+        }
+
+        if (imageUrl) {
+          uploadedImageUrls.push({
+            url: imageUrl,
+            position: image.position,
+            prompt: image.prompt,
+            isUploaded: image.isUploaded || false
+          });
+        }
+      }
+
+      // Prepare blog post data
+      const blogData = {
+        title: blogTitle,
+        content: blogContent,
+        featured_image: uploadedImageUrls.length > 0 ? uploadedImageUrls[0].url : null,
+        images: uploadedImageUrls,
+        seo_title: seoAnalysis?.metaTitle || blogTitle.substring(0, 60),
+        seo_description: seoAnalysis?.metaDescription || blogContent.substring(0, 160),
+        seo_keywords: seoAnalysis?.keywords || [],
+        status: 'draft',
+        author: 'Admin',
+        image_positions: uploadedImageUrls.reduce((acc, img, index) => {
+          acc[index] = img.position;
+          return acc;
+        }, {})
+      };
+
+      // Save to Supabase
+      const savedPost = await saveBlogPost(blogData);
+      
+      setSuccess('Blog post saved successfully!');
+      setImages([]); // Clear images after successful save
+      
+    } catch (err) {
+      setError(`Failed to save blog post: ${err.message}`);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const clearMessages = () => {
+    setError(null);
+    setSuccess(null);
+  };
+
   return (
     <div className="min-h-screen text-slate-300">
       <Header />
+      
+      {/* Status Messages */}
+      {(error || success) && (
+        <div className="container mx-auto px-4 pt-4">
+          {error && (
+            <div className="bg-red-900/50 border border-red-700 text-red-300 p-4 rounded-lg mb-4 flex justify-between items-center">
+              <span>{error}</span>
+              <button onClick={clearMessages} className="text-red-400 hover:text-red-200">✕</button>
+            </div>
+          )}
+          {success && (
+            <div className="bg-green-900/50 border border-green-700 text-green-300 p-4 rounded-lg mb-4 flex justify-between items-center">
+              <span>{success}</span>
+              <button onClick={clearMessages} className="text-green-400 hover:text-green-200">✕</button>
+            </div>
+          )}
+        </div>
+      )}
+
       <main className="container mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 bg-slate-800 rounded-2xl p-6 shadow-lg">
-          <h2 className="text-3xl font-bold text-white mb-6">Blog Content</h2>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-3xl font-bold text-white">Blog Content</h2>
+            <button
+              onClick={handleSaveBlogPost}
+              disabled={isSaving || !blogTitle.trim() || !blogContent.trim()}
+              className="flex items-center space-x-2 bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 disabled:bg-slate-500 disabled:cursor-not-allowed transition-colors"
+            >
+              {isSaving ? <Spinner /> : '💾 Save Post'}
+            </button>
+          </div>
           
           <TitleSuggester onSelectTitle={handleTitleSelection} />
 
@@ -224,8 +448,28 @@ const BlogApp = () => {
             onDeletePost={deletePlannedPost}
             onGenerateFromPost={startGenerationFromPlan}
           />
+          
           <div className="bg-slate-800 rounded-2xl p-6 shadow-lg">
             <h2 className="text-3xl font-bold text-white mb-6">Image Tools</h2>
+            
+            {/* Upload Section */}
+            <div className="mb-6 p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+              <label className="block text-sm font-medium text-slate-400 mb-2">
+                Upload Image
+              </label>
+              <div className="flex flex-col gap-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleUploadImage}
+                  className="w-full text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700"
+                />
+                <p className="text-xs text-slate-400">
+                  Supported formats: JPG, PNG, GIF, WebP. Max size: 5MB
+                </p>
+              </div>
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-slate-400 mb-2">Artistic Style</label>
               <div className="flex flex-wrap gap-2 mb-4">
@@ -239,13 +483,26 @@ const BlogApp = () => {
                   </button>
                 ))}
               </div>
+
+              <label className="block text-sm font-medium text-slate-400 mb-2">Image Position</label>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {imagePositions.map(position => (
+                  <button 
+                    key={position}
+                    onClick={() => setSelectedImagePosition(position)}
+                    className={`px-3 py-1 text-sm rounded-full transition-colors ${selectedImagePosition === position ? 'bg-green-500 text-white font-semibold' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}`}
+                  >
+                    {position}
+                  </button>
+                ))}
+              </div>
               
               <ImagePromptSuggester 
                 blogContent={blogContent} 
                 onSelectPrompt={(prompt) => setImagePrompt(prompt)} 
               />
 
-              <label htmlFor="image-prompt" className="block text-sm font-medium text-slate-400 mb-2">Image Prompt</label>
+              <label htmlFor="image-prompt" className="block text-sm font-medium text-slate-400 mb-2">AI Image Prompt</label>
               <div className="flex flex-col gap-2">
                 <textarea
                   id="image-prompt"
@@ -260,26 +517,53 @@ const BlogApp = () => {
                   disabled={isGeneratingImage || !imagePrompt}
                   className="w-full flex items-center justify-center bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 disabled:bg-slate-500 disabled:cursor-not-allowed transition-colors"
                 >
-                  {isGeneratingImage ? <Spinner /> : 'Generate Image'}
+                  {isGeneratingImage ? <Spinner /> : 'Generate AI Image'}
                 </button>
               </div>
             </div>
           </div>
+          
           <div className="space-y-4">
             <h3 className="text-2xl font-bold text-white px-2">Image Gallery</h3>
-            {error && <div className="bg-red-900/50 border border-red-700 text-red-300 p-3 rounded-lg">{error}</div>}
             {isGeneratingImage && <div className="text-center p-4">Generating your masterpiece...</div>}
-            {images.length === 0 && !isGeneratingImage && <p className="text-slate-400 text-center p-4">Your generated images will appear here.</p>}
+            {images.length === 0 && !isGeneratingImage && (
+              <p className="text-slate-400 text-center p-4">Your generated or uploaded images will appear here.</p>
+            )}
             <div className="columns-1 sm:columns-2 gap-4">
               {images.map(image => (
                 <div key={image.id} className="group relative bg-slate-800 p-2 rounded-lg shadow-md mb-4 break-inside-avoid">
                   <img src={image.src} alt={image.prompt} className="rounded-md w-full" />
+                  
+                  {/* Badge for uploaded images */}
+                  {image.isUploaded && (
+                    <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                      📁 Uploaded
+                    </div>
+                  )}
+                  
+                  <div className="mt-2">
+                    <label className="block text-xs text-slate-400 mb-1">Position</label>
+                    <select
+                      value={image.position}
+                      onChange={(e) => updateImagePosition(image.id, e.target.value)}
+                      className="w-full bg-slate-700 text-white text-xs p-1 rounded border border-slate-600"
+                    >
+                      {imagePositions.map(pos => (
+                        <option key={pos} value={pos}>{pos}</option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div className="mt-2 text-xs text-slate-400 truncate" title={image.prompt}>
+                    {image.prompt}
+                  </div>
+                  
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
                     <button onClick={() => setEditingImage(image)} className="bg-sky-600/80 p-3 rounded-full hover:bg-sky-500 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-white"><path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" /><path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z" /></svg>
                     </button>
                     <button onClick={() => deleteImage(image.id)} className="bg-red-600/80 p-3 rounded-full hover:bg-red-500 transition-colors">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-white"><path fillRule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.58.22-2.365.468a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52l.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193v-.443A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clipRule="evenodd" /></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-white"><path fillRule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.58.22-2.365.468a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193v-.443A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clipRule="evenodd" /></svg>
                     </button>
                   </div>
                 </div>
