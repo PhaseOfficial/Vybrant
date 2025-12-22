@@ -5,6 +5,7 @@ import cqcLogo from "../assets/asset_cqclogo_update.png";
 import icoLogo from "../assets/ico.webp";
 import sheffieldCouncilLogo from "../assets/sheffield-council.webp";
 import dementiaAllianceLogo from "../assets/dementia-alliance.webp";
+import inspectorate from "../assets/image.png";
 
 const PartnersSection = () => {
   return (
@@ -36,6 +37,13 @@ const PartnersSection = () => {
           <img
             src={dementiaAllianceLogo}
             alt="Sheffield Dementia Action Alliance"
+            className="h-16 md:h-20 object-contain"
+          />
+          </div>
+          <div className="flex items-center justify-center col-span-2 md:col-span-4">
+          <img 
+            src={inspectorate}
+            alt="Inspectorate"
             className="h-16 md:h-20 object-contain"
           />
         </div>

@@ -11,10 +11,6 @@ import ImagePromptSuggester from '../components/ImagePromptSuggester';
 const Header = () => (
   <header className="bg-slate-800/50 backdrop-blur-sm p-4 sticky top-0 z-10 border-b border-slate-700">
     <div className="container mx-auto flex items-center gap-3">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-sky-400">
-        <path d="M12 .75a8.25 8.25 0 0 0-4.133 15.543c.367.068.5-.158.5-.35v-1.246c0-.608-.022-2.502-1.523-3.024.994-.113 2.043-.484 2.043-2.261 0-.5.179-.909.472-1.229-.047-.113-.204-.582.045-1.212 0 0 .375-.12.123.475A4.295 4.295 0 0 1 12 6.45c1.155 0 2.225.41 3.016 1.088 1.153-.594 1.23-.475 1.23-.475.25.63.093 1.1.046 1.212.293.32.47.73.47 1.229 0 1.777 1.05 2.147 2.046 2.26-.929.8-1.408 1.83-1.488 2.793H15.5v-1.246c0-.192.133-.418.5-.35A8.25 8.25 0 0 0 12 .75Z" clipRule="evenodd" />
-        <path fillRule="evenodd" d="M12 23.25c-5.26 0-9.617-3.955-10.37-9h3.454a7.03 7.03 0 0 1 1.21 2.39L4.25 18.5h3.5l.82-2.5H15.5l.82 2.5h3.5l-2.043-1.859a7.03 7.03 0 0 1 1.21-2.39h3.454c-.753 5.045-5.11 9-10.37 9Z" clipRule="evenodd" />
-      </svg>
       <h1 className="text-2xl font-bold text-white">AI Blog Assistant</h1>
     </div>
   </header>
@@ -38,6 +34,7 @@ const BlogApp = () => {
   const [isAnalyzingSeo, setIsAnalyzingSeo] = useState(false);
   const [isFixingGrammar, setIsFixingGrammar] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   const [seoAnalysis, setSeoAnalysis] = useState(null);
   const [plannedPosts, setPlannedPosts] = useState([]);
@@ -46,6 +43,7 @@ const BlogApp = () => {
   const [success, setSuccess] = useState(null);
   
   const [editingImage, setEditingImage] = useState(null);
+  const [uploadedFileName, setUploadedFileName] = useState('');
 
   const handleGenerateContent = async () => {
     if (!contentPrompt) return;
@@ -146,8 +144,10 @@ const BlogApp = () => {
       return;
     }
 
+    setIsUploadingImage(true);
     setError(null);
     setSuccess(null);
+    setUploadedFileName(file.name);
 
     try {
       // Convert file to base64 for preview
@@ -167,13 +167,19 @@ const BlogApp = () => {
         };
         setImages(prev => [...prev, newImage]);
         setSuccess(`Image "${file.name}" uploaded successfully!`);
+        setIsUploadingImage(false);
         
         // Reset file input
         event.target.value = '';
       };
+      reader.onerror = () => {
+        setError('Failed to read image file');
+        setIsUploadingImage(false);
+      };
       reader.readAsDataURL(file);
     } catch (err) {
       setError('Failed to upload image. Please try again.');
+      setIsUploadingImage(false);
     }
   };
 
@@ -222,6 +228,21 @@ const BlogApp = () => {
         img.id === imageId ? { ...img, position } : img
       )
     );
+  };
+
+  const moveImage = (imageId, direction) => {
+    setImages(prevImages => {
+      const index = prevImages.findIndex(img => img.id === imageId);
+      if (index === -1) return prevImages;
+
+      const newImages = [...prevImages];
+      if (direction === 'up' && index > 0) {
+        [newImages[index - 1], newImages[index]] = [newImages[index], newImages[index - 1]];
+      } else if (direction === 'down' && index < newImages.length - 1) {
+        [newImages[index + 1], newImages[index]] = [newImages[index], newImages[index + 1]];
+      }
+      return newImages;
+    });
   };
   
   const addPlannedPost = (post) => {
@@ -335,6 +356,7 @@ const BlogApp = () => {
   const clearMessages = () => {
     setError(null);
     setSuccess(null);
+    setUploadedFileName('');
   };
 
   return (
@@ -458,12 +480,35 @@ const BlogApp = () => {
                 Upload Image
               </label>
               <div className="flex flex-col gap-2">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleUploadImage}
-                  className="w-full text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700"
-                />
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleUploadImage}
+                    className="w-full text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 opacity-0 absolute inset-0 z-10 cursor-pointer"
+                    id="file-upload"
+                  />
+                  <label 
+                    htmlFor="file-upload"
+                    className="w-full bg-slate-700 text-white py-3 px-4 rounded-lg border-2 border-slate-600 hover:border-indigo-500 transition-colors cursor-pointer flex items-center justify-center"
+                  >
+                    {isUploadingImage ? (
+                      <div className="flex items-center space-x-2">
+                        <Spinner />
+                        <span>Uploading {uploadedFileName}...</span>
+                      </div>
+                    ) : uploadedFileName ? (
+                      <div className="flex items-center space-x-2">
+                        <span className="text-green-400">✓</span>
+                        <span>{uploadedFileName}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center space-x-2">
+                        <span>📁 Choose Image File</span>
+                      </div>
+                    )}
+                  </label>
+                </div>
                 <p className="text-xs text-slate-400">
                   Supported formats: JPG, PNG, GIF, WebP. Max size: 5MB
                 </p>
@@ -524,29 +569,71 @@ const BlogApp = () => {
           </div>
           
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-white px-2">Image Gallery</h3>
+            <div className="flex justify-between items-center">
+              <h3 className="text-2xl font-bold text-white px-2">Image Gallery</h3>
+              {images.length > 0 && (
+                <span className="text-sm text-slate-400 bg-slate-700 px-3 py-1 rounded-full">
+                  {images.length} image{images.length !== 1 ? 's' : ''}
+                </span>
+              )}
+            </div>
             {isGeneratingImage && <div className="text-center p-4">Generating your masterpiece...</div>}
             {images.length === 0 && !isGeneratingImage && (
               <p className="text-slate-400 text-center p-4">Your generated or uploaded images will appear here.</p>
             )}
-            <div className="columns-1 sm:columns-2 gap-4">
-              {images.map(image => (
-                <div key={image.id} className="group relative bg-slate-800 p-2 rounded-lg shadow-md mb-4 break-inside-avoid">
-                  <img src={image.src} alt={image.prompt} className="rounded-md w-full" />
-                  
-                  {/* Badge for uploaded images */}
-                  {image.isUploaded && (
-                    <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
-                      📁 Uploaded
+            <div className="space-y-4">
+              {images.map((image, index) => (
+                <div key={image.id} className="group relative bg-slate-800 p-4 rounded-lg shadow-md border border-slate-700">
+                  {/* Image Header with Controls */}
+                  <div className="flex justify-between items-center mb-3">
+                    <div className="flex items-center space-x-2">
+                      {/* Badge for uploaded images */}
+                      {image.isUploaded && (
+                        <div className="bg-blue-500 text-white text-xs px-2 py-1 rounded flex items-center">
+                          <span className="mr-1">📁</span>
+                          <span>Uploaded</span>
+                        </div>
+                      )}
+                      <span className="text-xs text-slate-400">
+                        Position: {index + 1}
+                      </span>
                     </div>
-                  )}
+                    
+                    {/* Move Controls */}
+                    <div className="flex space-x-1">
+                      <button
+                        onClick={() => moveImage(image.id, 'up')}
+                        disabled={index === 0}
+                        className="p-1 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        title="Move up"
+                      >
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() => moveImage(image.id, 'down')}
+                        disabled={index === images.length - 1}
+                        className="p-1 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                        title="Move down"
+                      >
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
                   
-                  <div className="mt-2">
-                    <label className="block text-xs text-slate-400 mb-1">Position</label>
+                  {/* Image */}
+                  <img src={image.src} alt={image.prompt} className="rounded-md w-full max-h-48 object-contain bg-slate-900" />
+                  
+                  {/* Position Controls */}
+                  <div className="mt-3 space-y-2">
+                    <label className="block text-xs text-slate-400">Layout Position</label>
                     <select
                       value={image.position}
                       onChange={(e) => updateImagePosition(image.id, e.target.value)}
-                      className="w-full bg-slate-700 text-white text-xs p-1 rounded border border-slate-600"
+                      className="w-full bg-slate-700 text-white text-sm p-2 rounded border border-slate-600 focus:border-sky-500"
                     >
                       {imagePositions.map(pos => (
                         <option key={pos} value={pos}>{pos}</option>
@@ -554,17 +641,33 @@ const BlogApp = () => {
                     </select>
                   </div>
                   
-                  <div className="mt-2 text-xs text-slate-400 truncate" title={image.prompt}>
+                  {/* Prompt/Description */}
+                  <div className="mt-2 text-sm text-slate-400 truncate" title={image.prompt}>
                     {image.prompt}
                   </div>
                   
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                    <button onClick={() => setEditingImage(image)} className="bg-sky-600/80 p-3 rounded-full hover:bg-sky-500 transition-colors">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-white"><path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" /><path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z" /></svg>
-                    </button>
-                    <button onClick={() => deleteImage(image.id)} className="bg-red-600/80 p-3 rounded-full hover:bg-red-500 transition-colors">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-white"><path fillRule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.58.22-2.365.468a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193v-.443A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clipRule="evenodd" /></svg>
-                    </button>
+                  {/* Action Buttons */}
+                  <div className="mt-3 flex justify-between items-center">
+                    <div className="flex space-x-2">
+                      <button 
+                        onClick={() => setEditingImage(image)} 
+                        className="flex items-center space-x-1 bg-sky-600 text-white text-xs py-1 px-2 rounded hover:bg-sky-500 transition-colors"
+                      >
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m5 13 4 4L19 7" />
+                        </svg>
+                        <span>Edit</span>
+                      </button>
+                      <button 
+                        onClick={() => deleteImage(image.id)} 
+                        className="flex items-center space-x-1 bg-red-600 text-white text-xs py-1 px-2 rounded hover:bg-red-500 transition-colors"
+                      >
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <span>Delete</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

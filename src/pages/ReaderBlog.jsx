@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
+import logo from '../assets/qt=q_95.webp';
 
 const ReaderBlog = () => {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -67,25 +68,41 @@ const ReaderBlog = () => {
   const renderBlogContent = (content) => {
     if (!content) return '';
     
+    // Process inline formatting
+    const processInlineFormatting = (text) => {
+      // Handle bold: **text**
+      text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      
+      // Handle italic: *text*
+      text = text.replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+      
+      return text;
+    };
+
     return content
       .split('\n\n')
       .map(paragraph => {
-        if (paragraph.trim() === '') return '';
+        const trimmedParagraph = paragraph.trim();
+        if (trimmedParagraph === '') return '';
         
-        if (paragraph.startsWith('# ')) {
-          return `<h1 class="text-4xl font-bold text-gray-900 mb-6 mt-8">${paragraph.substring(2)}</h1>`;
-        } else if (paragraph.startsWith('## ')) {
-          return `<h2 class="text-3xl font-bold text-gray-900 mb-4 mt-6">${paragraph.substring(3)}</h2>`;
-        } else if (paragraph.startsWith('### ')) {
-          return `<h3 class="text-2xl font-bold text-gray-900 mb-3 mt-5">${paragraph.substring(4)}</h3>`;
-        } else if (paragraph.startsWith('#### ')) {
-          return `<h4 class="text-xl font-bold text-gray-900 mb-2 mt-4">${paragraph.substring(5)}</h4>`;
-        } else if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
-          return `<p class="text-gray-700 mb-4 leading-relaxed"><strong>${paragraph.substring(2, paragraph.length - 2)}</strong></p>`;
-        } else if (paragraph.startsWith('*') && paragraph.endsWith('*')) {
-          return `<p class="text-gray-700 mb-4 leading-relaxed italic">${paragraph.substring(1, paragraph.length - 1)}</p>`;
+        // Process inline formatting first
+        let processedParagraph = processInlineFormatting(trimmedParagraph);
+        
+        // Handle headings and paragraphs
+        if (trimmedParagraph.startsWith('# ')) {
+          const headingText = processInlineFormatting(trimmedParagraph.substring(2));
+          return `<h1 class="text-4xl font-bold text-gray-900 mb-6 mt-8">${headingText}</h1>`;
+        } else if (trimmedParagraph.startsWith('## ')) {
+          const headingText = processInlineFormatting(trimmedParagraph.substring(3));
+          return `<h2 class="text-3xl font-bold text-gray-900 mb-4 mt-6">${headingText}</h2>`;
+        } else if (trimmedParagraph.startsWith('### ')) {
+          const headingText = processInlineFormatting(trimmedParagraph.substring(4));
+          return `<h3 class="text-2xl font-bold text-gray-900 mb-3 mt-5">${headingText}</h3>`;
+        } else if (trimmedParagraph.startsWith('#### ')) {
+          const headingText = processInlineFormatting(trimmedParagraph.substring(5));
+          return `<h4 class="text-xl font-bold text-gray-900 mb-2 mt-4">${headingText}</h4>`;
         } else {
-          return `<p class="text-gray-700 mb-4 leading-relaxed text-lg">${paragraph}</p>`;
+          return `<p class="text-gray-700 mb-4 leading-relaxed text-lg">${processedParagraph}</p>`;
         }
       })
       .join('');
@@ -118,8 +135,8 @@ const ReaderBlog = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">B</span>
+              <div className="w-20 rounded-lg flex items-center justify-center">
+                <img src={logo} alt="Logo" className="w-20" />
               </div>
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">Our Blog</h1>
