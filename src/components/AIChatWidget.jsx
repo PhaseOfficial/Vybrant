@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaComments, FaPaperPlane, FaWhatsapp } from "react-icons/fa";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+// ❌ Removed GoogleGenerativeAI import
 import contextData from "./contextPrompts.json";
 import { supabase } from "../lib/supabaseClient";
 
@@ -21,9 +21,6 @@ const ChatBot = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
 
   const messagesEndRef = useRef(null);
-  
-  // ✅ Initialize Google Generative AI
-  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
   // ✅ Save messages to localStorage on change
   useEffect(() => {
@@ -159,22 +156,21 @@ const ChatBot = () => {
       return;
     }
 
+    // ✅ CALL SUPABASE EDGE FUNCTION (Secure)
     try {
-      // ✅ Build conversation history for context
-      const conversationHistory = updatedMessages
-        .map((m) => `${m.sender === "user" ? "User" : "Assistant"}: ${m.text}`)
-        .join("\n");
-      
-      const fullPrompt = `${contextData.prompt}\n\n${conversationHistory}\nAssistant:`;
-
-      // ✅ Use the Generative AI library
-      const model = genAI.getGenerativeModel({ 
-        model: "gemini-2.5-flash" 
+      const { data, error } = await supabase.functions.invoke("chat-ai", {
+        body: { 
+            messages: updatedMessages,
+            // We pass the context here so the Edge function knows who it is
+            systemPrompt: contextData.prompt 
+        },
       });
 
-      const result = await model.generateContent(fullPrompt);
-      const response = await result.response;
-      const aiReply = response.text() || "I'm here to assist you further!";
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      const aiReply = data.reply || "I'm here to assist you further!";
       
       setMessages((prev) => [...prev, { sender: "ai", text: aiReply }]);
     } catch (error) {
@@ -258,7 +254,7 @@ const ChatBot = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Contact Form (with fade-up animation) */}
+          {/* Contact Form */}
           {formVisible && (
             <form
               onSubmit={handleFormSubmit}

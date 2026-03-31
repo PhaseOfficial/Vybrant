@@ -35,8 +35,11 @@ const Footer = () => {
           </div>
 
           {/* Copyright */}
-          <div>
+          <div className="text-center md:text-right">
             <p className="text-sm">&copy; 2025 Vybrant Care Services. All rights reserved.</p>
+            <p className="text-xs mt-1">
+              Website by <a href="https://web.redcupseries.co.zw" target="_blank" rel="noopener noreferrer" className="hover:text-white underline transition-colors">RedCupSeries</a>
+            </p>
           </div>
         </div>
       </div>
