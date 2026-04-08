@@ -22,6 +22,8 @@ import { supabase } from "./lib/supabaseClient";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ReaderBlog from "./pages/ReaderBlog";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfUse from "./pages/TermsOfUse";
 
 const tagManagerArgs = {
   gtmId: "GTM-PKXK7LPV",
@@ -71,6 +73,8 @@ const App = () => {
         <Route path="/Mordenslavery" element={<Mordenslavery />} />
         <Route path="/scotland" element={<ScotlandBranchPage />} />
         <Route path="/blog" element={<ReaderBlog />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-use" element={<TermsOfUse />} />
         <Route
           path="/admin"
           element={
